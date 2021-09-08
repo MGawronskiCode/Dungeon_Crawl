@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.elements.actors.Player;
-import com.codecool.dungeoncrawl.logic.elements.actors.Skeleton;
+import com.codecool.dungeoncrawl.logic.elements.actors.*;
+import com.codecool.dungeoncrawl.logic.elements.items.Doors;
 
 import java.io.InputStream;
 import java.util.Scanner;
@@ -33,6 +33,7 @@ public class MapLoader {
                             break;
                         case 'D':
                             cell.setType(CellType.FLOOR);
+                            new Doors(cell);
                             break;
                         case 'I':
                             cell.setType(CellType.FLOOR);
@@ -45,9 +46,24 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Skeleton(cell);
                             break;
-                        case 'E':
+                        case 'S':
                             cell.setType(CellType.FLOOR);
-//                            new Enemy(cell);//enemy class
+                            new Spider(cell);
+                            break;
+                        case 'G':
+                            cell.setType(CellType.FLOOR);
+                            new Ghost(cell);
+                            break;
+                        case 'b':
+                            cell.setType(CellType.FLOOR);
+                            new Bat(cell);
+                            break;
+                        case 'w':
+                            cell.setType(CellType.FLOOR);
+                            new Warrior(cell);
+                            break;
+                        case 'q':
+                            cell.setType(CellType.getRandomDecoration());
                             break;
                         case '@':
                             cell.setType(CellType.FLOOR);

@@ -1,10 +1,9 @@
 package com.codecool.dungeoncrawl.logic.elements.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
-import com.codecool.dungeoncrawl.logic.Drawable;
 import com.codecool.dungeoncrawl.logic.elements.Element;
 
-public abstract class Actor extends Element implements Drawable {
+public abstract class Actor extends Element {
 
     private final int health = 10;
 
