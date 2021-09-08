@@ -35,9 +35,6 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Doors(cell);
                             break;
-                        case 'I':
-                            cell.setType(CellType.FLOOR);
-                            break;
                         case 'K':
                             cell.setType(CellType.FLOOR);
 //                            new Key(cell);
