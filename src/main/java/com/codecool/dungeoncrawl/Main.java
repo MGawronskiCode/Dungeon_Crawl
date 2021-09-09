@@ -22,6 +22,7 @@ public class Main extends Application{
 	GameMap map = MapLoader.loadMap();
 	Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
 	GraphicsContext context = canvas.getGraphicsContext2D();
+	Label nameLabel = new Label();
 	Label healthLabel = new Label();
 	
 	public static void main(String[] args){
@@ -34,8 +35,11 @@ public class Main extends Application{
 		ui.setPrefWidth(200);
 		ui.setPadding(new Insets(10));
 		
-		ui.add(new Label("Health: "), 0, 0);
-		ui.add(healthLabel, 1, 0);
+		nameLabel.setText("" + map.getPlayer().getName());
+		ui.add(new Label("Name: "), 0, 0);
+		ui.add(new Label("Health: "), 0, 1);
+		ui.add(nameLabel, 1, 0);
+		ui.add(healthLabel, 1, 1);
 		
 		BorderPane borderPane = new BorderPane();
 		

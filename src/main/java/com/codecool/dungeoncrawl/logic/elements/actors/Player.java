@@ -1,9 +1,15 @@
 package com.codecool.dungeoncrawl.logic.elements.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Player extends Actor{
-
+	
+	@Getter
+	@Setter
+	private String name;
+	
 	public Player(Cell cell){
 		super(cell);
 		setHealth(100);

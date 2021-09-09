@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.util.Random;
 
 public abstract class Actor extends Element implements Movable{
-	Random random = new Random();
+	protected Random random = new Random();
 	@Getter
 	@Setter
 	private int health = -1;
