@@ -1,34 +1,32 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.elements.actors.Enemy;
 import com.codecool.dungeoncrawl.logic.elements.actors.Player;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 
 @Getter
-public class GameMap {
-    private final int width;
-    private final int height;
-    private final Cell[][] cells;
-
-    private final ArrayList<Enemy> enemies = new ArrayList<>();
-    @Setter
-    private Player player;
-
-    public GameMap(int width, int height, CellType defaultCellType) {
-        this.width = width;
-        this.height = height;
-        cells = new Cell[width][height];
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                cells[x][y] = new Cell(this, x, y, defaultCellType);
-            }
-        }
-    }
-
-    public Cell getCell(int x, int y) {
-        return cells[x][y];
-    }
+public class GameMap{
+	private final int width;
+	private final int height;
+	private final Cell[][] cells;
+	
+	@Setter
+	private Player player;
+	
+	public GameMap(int width, int height, CellType defaultCellType){
+		this.width = width;
+		this.height = height;
+		cells = new Cell[width][height];
+		for(int x = 0;x < width;x++){
+			for(int y = 0;y < height;y++){
+				cells[x][y] = new Cell(this, x, y, defaultCellType);
+			}
+		}
+	}
+	
+	public Cell getCell(int x, int y){
+		return cells[x][y];
+	}
+	
 }

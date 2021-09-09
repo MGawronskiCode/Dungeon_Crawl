@@ -2,12 +2,19 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Player extends Actor {
-    public Player(Cell cell) {
-        super(cell);
-    }
-
-    public String getTileName() {
-        return "player";
-    }
+public class Player extends Actor{
+	public Player(Cell cell){
+		super(cell);
+	}
+	
+	public String getTileName(){
+		return "player";
+	}
+	
+	public void move(int dx, int dy){
+		Cell nextCell = cell.getNeighbor(dx, dy);
+		cell.setActor(null);
+		nextCell.setActor(this);
+		cell = nextCell;
+	}
 }
