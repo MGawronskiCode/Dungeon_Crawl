@@ -55,6 +55,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Bat(cell);
                             break;
+                        case 't':
+                            cell.setType(CellType.FLOOR);
+                            new Troll(cell);
+                            break;
                         case 'w':
                             cell.setType(CellType.FLOOR);
                             new Warrior(cell);

@@ -31,11 +31,6 @@ public enum CellType {
     DECORATION21("decoration22"),
     DECORATION22("decoration23");
 
-
-//    SWORD("sword"),
-//    KEY("key"),
-//    DOORS("doors");
-
     private final String tileName;
 
     CellType(String tileName) {
@@ -44,7 +39,7 @@ public enum CellType {
 
     public static CellType getRandomDecoration() {
         Random r = new Random();
-        int randomDecorationInt = r.nextInt(24) + 3;//random from 3 to 10 like decoration number
+        int randomDecorationInt = r.nextInt(24) + 3;//random from 3 to 27 - decorations indexes
         int i = 0;
         for (CellType celltype : CellType.values()) {
             if (i == randomDecorationInt)
