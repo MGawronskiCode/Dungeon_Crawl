@@ -2,20 +2,16 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Echinops extends Enemy{
-	public Echinops(Cell cell){
+public class Mag extends Enemy implements Movable{
+	public Mag(Cell cell){
 		super(cell);
-		setHealth(150);
-		setAttack(5);
+		setHealth(50);
+		setAttack(40);
 		setDefence(0);
 	}
 	
 	@Override
 	public String getTileName(){
-		return "echinops";
-	}
-	
-	@Override
-	public void move(){
+		return "mag";
 	}
 }

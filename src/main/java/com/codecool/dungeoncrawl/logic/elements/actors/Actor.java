@@ -3,13 +3,22 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.elements.Element;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Random;
 
 public abstract class Actor extends Element implements Movable{
-	
-	private final int health = 10;
 	Random random = new Random();
+	@Getter
+	@Setter
+	private int health = -1;
+	@Getter
+	@Setter
+	private int attack = -1;
+	@Setter
+	@Getter
+	private int defence = -1;
 	
 	public Actor(Cell cell){
 		this.cell = cell;
@@ -40,10 +49,6 @@ public abstract class Actor extends Element implements Movable{
 			cell = nextCell;
 		}
 		return validMove;
-	}
-	
-	public int getHealth(){
-		return health;
 	}
 	
 	public Cell getCell(){

@@ -7,6 +7,9 @@ public class Troll extends Enemy{
 	
 	public Troll(Cell cell){
 		super(cell);
+		setHealth(200);
+		setAttack(25);
+		setDefence(0);
 	}
 	
 	@Override
