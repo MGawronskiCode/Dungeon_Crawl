@@ -59,6 +59,10 @@ public class MapLoader {
                             cell.setType(CellType.FLOOR);
                             new Troll(cell);
                             break;
+                        case 'e':
+                            cell.setType(CellType.FLOOR);
+                            new Echinops(cell);
+                            break;
                         case 'w':
                             cell.setType(CellType.FLOOR);
                             new Warrior(cell);

@@ -1,12 +1,20 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.elements.actors.Enemy;
 import com.codecool.dungeoncrawl.logic.elements.actors.Player;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
+
+@Getter
 public class GameMap {
     private final int width;
     private final int height;
     private final Cell[][] cells;
 
+    private final ArrayList<Enemy> enemies = new ArrayList<>();
+    @Setter
     private Player player;
 
     public GameMap(int width, int height, CellType defaultCellType) {
@@ -22,21 +30,5 @@ public class GameMap {
 
     public Cell getCell(int x, int y) {
         return cells[x][y];
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 }

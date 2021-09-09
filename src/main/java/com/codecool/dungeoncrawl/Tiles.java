@@ -26,6 +26,8 @@ public class Tiles {
         tileMap.put("spider", new Tile(28, 5));
         tileMap.put("bat", new Tile(26, 8));
         tileMap.put("troll", new Tile(30, 6));
+        tileMap.put("mag", new Tile(24, 1));
+        tileMap.put("echinops", new Tile(24, 0));
         //items
         tileMap.put("sword", new Tile(0, 30));
         tileMap.put("key", new Tile(16, 23));
