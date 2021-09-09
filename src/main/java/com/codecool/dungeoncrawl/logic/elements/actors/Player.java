@@ -27,4 +27,16 @@ public class Player extends Actor{
 		nextCell.setActor(this);
 		cell = nextCell;
 	}
+	
+	public boolean isEnemy(int dx, int dy){
+		Cell nextCell = cell.getNeighbor(dx, dy);
+		return nextCell.getActor() != null;
+	}
+	
+	public void attack(int dx, int dy){
+		Cell nextCell = cell.getNeighbor(dx, dy);
+		Enemy enemy = (Enemy) nextCell.getActor();
+		int enemyHealth = enemy.getHealth();
+		enemy.setHealth(enemyHealth - this.attack);
+	}
 }

@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.elements.actors.Enemy;
+import com.codecool.dungeoncrawl.logic.elements.actors.Player;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -57,19 +58,25 @@ public class Main extends Application{
 	
 	private void onKeyPressed(KeyEvent keyEvent){
 		try{
+			Player player = map.getPlayer();
+			int dx = 0;
+			int dy = 0;
 			switch(keyEvent.getCode()){
-				//todo ograniczyć ruch przez ściany
 				case UP:
-					map.getPlayer().move(0, -1);
+					dy = -1;
+					makeMove(player, dx, dy);
 					break;
 				case DOWN:
-					map.getPlayer().move(0, 1);
+					dy = 1;
+					makeMove(player, dx, dy);
 					break;
 				case LEFT:
-					map.getPlayer().move(-1, 0);
+					dx = -1;
+					makeMove(player, dx, dy);
 					break;
 				case RIGHT:
-					map.getPlayer().move(1, 0);
+					dx = 1;
+					makeMove(player, dx, dy);
 					break;
 			}
 		}catch(Exception ignored){
@@ -82,6 +89,13 @@ public class Main extends Application{
 			}
 		}
 		refresh();
+	}
+	
+	private void makeMove(Player player, int dx, int dy){
+		if(player.isEnemy(dx, dy))
+			player.attack(dx, dy);
+		else
+			player.move(dx, dy);
 	}
 	
 	private void refresh(){

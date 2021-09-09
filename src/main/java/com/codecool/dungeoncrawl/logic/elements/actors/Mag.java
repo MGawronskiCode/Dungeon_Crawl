@@ -14,4 +14,5 @@ public class Mag extends Enemy implements Movable{
 	public String getTileName(){
 		return "mag";
 	}
+	
 }

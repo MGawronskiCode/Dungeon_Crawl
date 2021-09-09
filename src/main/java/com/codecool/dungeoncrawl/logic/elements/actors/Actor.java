@@ -12,13 +12,13 @@ public abstract class Actor extends Element implements Movable{
 	protected Random random = new Random();
 	@Getter
 	@Setter
-	private int health = -1;
+	protected int health = -1;
 	@Getter
 	@Setter
-	private int attack = -1;
+	protected int attack = -1;
 	@Setter
 	@Getter
-	private int defence = -1;
+	protected int defence = -1;
 	
 	public Actor(Cell cell){
 		this.cell = cell;
@@ -28,11 +28,11 @@ public abstract class Actor extends Element implements Movable{
 	public void move(){
 		boolean validMove = false;
 		do{
-			validMove = prepareForMoveValidation(validMove);
+			validMove = randomMoveDirection(validMove);
 		}while(!validMove);
 	}
 	
-	private boolean prepareForMoveValidation(boolean validMove){
+	private boolean randomMoveDirection(boolean validMove){
 		int dx = random.nextInt(3) - 1;
 		int dy = random.nextInt(3) - 1;
 		Cell nextCell = cell.getNeighbor(dx, dy);
@@ -49,6 +49,11 @@ public abstract class Actor extends Element implements Movable{
 			cell = nextCell;
 		}
 		return validMove;
+	}
+	
+	@Override
+	public void attack(){
+		//todo: implement attack
 	}
 	
 	public Cell getCell(){
