@@ -11,4 +11,8 @@ public class Echinops extends Enemy {
     public String getTileName() {
         return "echinops";
     }
+
+    @Override
+    public void move(int dx, int dy) {
+    }
 }

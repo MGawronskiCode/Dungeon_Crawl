@@ -1,5 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
+import lombok.Getter;
+
 import java.util.Random;
 
 public enum CellType {
@@ -31,6 +33,7 @@ public enum CellType {
     DECORATION21("decoration22"),
     DECORATION22("decoration23");
 
+    @Getter
     private final String tileName;
 
     CellType(String tileName) {
@@ -47,9 +50,5 @@ public enum CellType {
             i++;
         }
         return DECORATION0;
-    }
-
-    public String getTileName() {
-        return tileName;
     }
 }
