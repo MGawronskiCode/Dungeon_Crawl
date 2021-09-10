@@ -16,6 +16,6 @@ public class Echinops extends Enemy{
 	}
 	
 	@Override
-	public void move(){
+	public void makeMove(){
 	}
 }

@@ -25,14 +25,18 @@ public abstract class Actor extends Element implements Movable{
 		this.cell.setActor(this);
 	}
 	
-	public void move(){
-		boolean validMove = false;
-		do{
-			validMove = randomMoveDirection(validMove);
-		}while(!validMove);
+	public void makeMove(){
+		if(isPlayerNextTo()){
+		
+		}else{
+			boolean validMove = false;
+			do{
+				validMove = moveRandomDirection(validMove);
+			}while(!validMove);
+		}
 	}
 	
-	private boolean randomMoveDirection(boolean validMove){
+	protected boolean moveRandomDirection(boolean validMove){
 		int dx = random.nextInt(3) - 1;
 		int dy = random.nextInt(3) - 1;
 		Cell nextCell = cell.getNeighbor(dx, dy);
@@ -41,7 +45,7 @@ public abstract class Actor extends Element implements Movable{
 		return validMove;
 	}
 	
-	private boolean isValidMove(boolean validMove, Cell nextCell, CellType nextCellType){
+	protected boolean isValidMove(boolean validMove, Cell nextCell, CellType nextCellType){
 		if((nextCellType == CellType.EMPTY || nextCellType == CellType.FLOOR) && nextCell.getActor() == null){
 			validMove = true;
 			cell.setActor(null);
@@ -49,6 +53,28 @@ public abstract class Actor extends Element implements Movable{
 			cell = nextCell;
 		}
 		return validMove;
+	}
+	
+	protected boolean isPlayerNextTo(){
+		int dx = 0;
+		int dy = -1;
+		if(isPlayerInCell(dx, dy))
+			return true;
+		dy = 1;
+		if(isPlayerInCell(dx, dy))
+			return true;
+		dx = -1;
+		dy = 0;
+		if(isPlayerInCell(dx, dy))
+			return true;
+		dx = 1;
+		return isPlayerInCell(dx, dy);
+	}
+	
+	private boolean isPlayerInCell(int dx, int dy){
+		Cell nextToCell = cell.getNeighbor(dx, dy);
+		Actor nextToCellActor = nextToCell.getActor();
+		return nextToCellActor instanceof Player;
 	}
 	
 	@Override

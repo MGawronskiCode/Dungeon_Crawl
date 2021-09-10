@@ -84,7 +84,7 @@ public class Main extends Application{
 		}
 		for(Enemy enemy : enemies){
 			try{
-				enemy.move();
+				enemy.makeMove();
 			}catch(Exception ignored){
 			}
 		}

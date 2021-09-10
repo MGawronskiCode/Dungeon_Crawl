@@ -16,8 +16,8 @@ public class Bat extends Enemy{
 	}
 	
 	@Override
-	public void move(){
-		super.move();
-		super.move();
+	public void makeMove(){
+		super.makeMove();
+		super.makeMove();
 	}
 }
