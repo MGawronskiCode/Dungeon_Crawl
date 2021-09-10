@@ -12,10 +12,13 @@ public abstract class Enemy extends Actor{
 		if(isPlayerNextTo()){
 			attack(player);
 		}else{
+			int limit = 30;
+			int counter = 0;
 			boolean validMove = false;
 			do{
 				validMove = moveRandomDirection(validMove);
-			}while(!validMove);
+				counter++;//prevents infinite loop
+			}while(!validMove && counter < limit);
 		}
 	}
 	
