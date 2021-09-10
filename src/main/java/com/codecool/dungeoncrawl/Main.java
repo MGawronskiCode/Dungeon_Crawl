@@ -58,8 +58,8 @@ public class Main extends Application{
 	
 	private void onKeyPressed(KeyEvent keyEvent){
 		ArrayList<Enemy> enemies = MapLoader.getEnemies();
+		Player player = map.getPlayer();
 		try{
-			Player player = map.getPlayer();
 			int dx = 0;
 			int dy = 0;
 			switch(keyEvent.getCode()){
@@ -84,7 +84,7 @@ public class Main extends Application{
 		}
 		for(Enemy enemy : enemies){
 			try{
-				enemy.makeMove();
+				enemy.makeMove(player);
 			}catch(Exception ignored){
 			}
 		}

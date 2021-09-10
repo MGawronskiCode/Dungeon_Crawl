@@ -18,7 +18,7 @@ public class Ghost extends Enemy{
 	}
 	
 	@Override
-	public void makeMove(){
+	public void makeMove(Player player){
 		boolean validMove = false;
 		do{
 			validMove = prepareForMoveValidation(validMove);

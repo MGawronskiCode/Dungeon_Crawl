@@ -16,6 +16,8 @@ public class Echinops extends Enemy{
 	}
 	
 	@Override
-	public void makeMove(){
+	public void makeMove(Player player){
+		if(isPlayerNextTo())
+			attack(player);
 	}
 }

@@ -18,9 +18,9 @@ public class Troll extends Enemy{
 	}
 	
 	@Override
-	public void makeMove(){
+	public void makeMove(Player player){
 		if(canMove){
-			super.makeMove();
+			super.makeMove(player);
 			canMove = false;
 		}else
 			canMove = true;

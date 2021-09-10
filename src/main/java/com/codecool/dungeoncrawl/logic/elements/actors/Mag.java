@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Mag extends Enemy implements Movable{
+public class Mag extends Enemy{
 	public Mag(Cell cell){
 		super(cell);
 		setHealth(50);
