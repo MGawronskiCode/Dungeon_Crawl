@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Tiles{
-	private static final Image tileset = new Image("/tiles.png", 543 * 2, 543 * 2, true, false);
+	private static final Image tileset = new Image("/tiles2.png", 543 * 2, 543 * 2, true, false);
 	private static final Map<String, Tile> tileMap = new HashMap<>();
 	public static int TILE_WIDTH = 32;
 	
