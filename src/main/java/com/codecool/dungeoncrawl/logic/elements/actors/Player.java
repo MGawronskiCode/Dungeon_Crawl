@@ -4,6 +4,8 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 public class Player extends Actor{
 	
 	@Getter
@@ -33,10 +35,14 @@ public class Player extends Actor{
 		return nextCell.getActor() != null;
 	}
 	
-	public void attack(int dx, int dy){
+	public void attack(int dx, int dy, ArrayList<Enemy> enemies){
 		Cell nextCell = cell.getNeighbor(dx, dy);
-		Enemy enemy = (Enemy) nextCell.getActor();
-		int enemyHealth = enemy.getHealth();
-		enemy.setHealth(enemyHealth - this.attack);
+		Enemy attackedEnemy = (Enemy) nextCell.getActor();
+		int enemyHealth = attackedEnemy.getHealth();
+		attackedEnemy.setHealth(enemyHealth - this.attack);
+		if(enemyHealth <= 0){
+			enemies.removeIf(enemy -> enemy.equals(attackedEnemy));
+			nextCell.setActor(null);
+		}
 	}
 }

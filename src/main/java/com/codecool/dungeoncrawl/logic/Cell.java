@@ -35,5 +35,4 @@ public class Cell implements Drawable{
 	public String getTileName(){
 		return type.getTileName();
 	}
-	
 }

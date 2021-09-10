@@ -57,6 +57,7 @@ public class Main extends Application{
 	}
 	
 	private void onKeyPressed(KeyEvent keyEvent){
+		ArrayList<Enemy> enemies = MapLoader.getEnemies();
 		try{
 			Player player = map.getPlayer();
 			int dx = 0;
@@ -64,24 +65,23 @@ public class Main extends Application{
 			switch(keyEvent.getCode()){
 				case UP:
 					dy = -1;
-					makeMove(player, dx, dy);
+					makeMove(player, dx, dy, enemies);
 					break;
 				case DOWN:
 					dy = 1;
-					makeMove(player, dx, dy);
+					makeMove(player, dx, dy, enemies);
 					break;
 				case LEFT:
 					dx = -1;
-					makeMove(player, dx, dy);
+					makeMove(player, dx, dy, enemies);
 					break;
 				case RIGHT:
 					dx = 1;
-					makeMove(player, dx, dy);
+					makeMove(player, dx, dy, enemies);
 					break;
 			}
 		}catch(Exception ignored){
 		}
-		ArrayList<Enemy> enemies = MapLoader.getEnemies();
 		for(Enemy enemy : enemies){
 			try{
 				enemy.move();
@@ -91,9 +91,9 @@ public class Main extends Application{
 		refresh();
 	}
 	
-	private void makeMove(Player player, int dx, int dy){
+	private void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies){
 		if(player.isEnemy(dx, dy))
-			player.attack(dx, dy);
+			player.attack(dx, dy, enemies);
 		else
 			player.move(dx, dy);
 	}
