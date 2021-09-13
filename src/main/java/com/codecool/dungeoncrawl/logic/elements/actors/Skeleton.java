@@ -15,4 +15,12 @@ public class Skeleton extends Enemy{
 		return "skeleton";
 	}
 	
+	@Override
+	public void makeMove(Player player){
+		if(isPlayerNextTo()){
+			attack(player);
+		}else{
+			randomMove();
+		}
+	}
 }

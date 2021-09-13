@@ -3,8 +3,6 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 
-import static java.lang.Math.abs;
-
 public abstract class Enemy extends Actor{
 	public Enemy(Cell cell){
 		super(cell);
@@ -21,60 +19,68 @@ public abstract class Enemy extends Actor{
 	}
 	
 	protected void moveToPlayer(Player player){
-		Cell nextCell = bestMoveGetCloserPlayer(player);
-		CellType nextCellType = nextCell.getType();
-		boolean validMove = false;
-		if(isValidMove(validMove, nextCell, nextCellType)){
-			System.out.println("not random");
-			move(nextCell);
-		}else{
-			randomMove();
-		}
-	}
-	
-	private Cell bestMoveGetCloserPlayer(Player player){//todo return correct cell
-		int dx = 0;
-		int dy = -1;
-		Cell bestCell = cell.getNeighbor(dx, dy);
-		Integer bestCellDistanceFromPlayer = countCellDistanceFromPlayer(bestCell, player);
-		
-		dy = 1;
-		checkIfCellIsBetter(player, dx, dy, bestCellDistanceFromPlayer, bestCell);
-		
-		dx = -1;
-		dy = 0;
-		checkIfCellIsBetter(player, dx, dy, bestCellDistanceFromPlayer, bestCell);
-		
-		dx = 1;
-		checkIfCellIsBetter(player, dx, dy, bestCellDistanceFromPlayer, bestCell);
-		
-		return bestCell;
-	}
-	
-	private void checkIfCellIsBetter(Player player, int dx, int dy, Integer bestCellDistanceFromPlayer, Cell bestCell){
-		Cell actualCell = cell.getNeighbor(dx, dy);
-		int actualCellDistanceFromPlayer = countCellDistanceFromPlayer(actualCell, player);
-		
-		if(actualCellDistanceFromPlayer < bestCellDistanceFromPlayer){//todo dlaczego się nie nadpisuje!!!!!
-			bestCell = actualCell;
-			bestCellDistanceFromPlayer = actualCellDistanceFromPlayer;
-		}
-	}
-	
-	private int countCellDistanceFromPlayer(Cell cell, Player player){
-		//todo implement counting distance from cell with player
-		int cellX = cell.getX();
-		int cellY = cell.getY();
+		int thisX = this.getX();
+		int thisY = this.getY();
 		int playerX = player.getCell().getX();
 		int playerY = player.getCell().getY();
+		Cell nextCell;
+		CellType nextCellType;
+		int dx, dy;
 		
-		int xAbsoluteDifference = abs(cellX - playerX);
-		int yAbsoluteDifference = abs(cellY - playerY);
+		if(thisX < playerX){
+			dx = 1;
+			dy = 0;
+			nextCell = cell.getNeighbor(dx, dy);
+			nextCellType = nextCell.getType();
+			if(isValidMove(nextCell, nextCellType)){
+				move(nextCell);
+			}else{
+				moveCloserPlayerVertically(thisY, playerY);
+			}
+			
+		}else{
+			dx = -1;
+			dy = 0;
+			nextCell = cell.getNeighbor(dx, dy);
+			nextCellType = nextCell.getType();
+			if(isValidMove(nextCell, nextCellType)){
+				move(nextCell);
+			}else{
+				moveCloserPlayerVertically(thisY, playerY);
+			}
+		}
 		
-		return xAbsoluteDifference + yAbsoluteDifference;
 	}
 	
-	private void randomMove(){
+	private void moveCloserPlayerVertically(int thisY, int playerY){
+		int dx;
+		int dy;
+		Cell nextCell;
+		CellType nextCellType;
+		if(thisY < playerY){
+			dx = 0;
+			dy = 1;
+			nextCell = cell.getNeighbor(dx, dy);
+			nextCellType = nextCell.getType();
+			if(isValidMove(nextCell, nextCellType)){
+				move(nextCell);
+			}
+		}else{
+			dx = 0;
+			dy = -1;
+			nextCell = cell.getNeighbor(dx, dy);
+			nextCellType = nextCell.getType();
+			if(isValidMove(nextCell, nextCellType)){
+				move(nextCell);
+			}
+		}
+	}
+	
+	private boolean isValidMove(Cell nextCell, CellType nextCellType){
+		return (nextCellType == CellType.EMPTY || nextCellType == CellType.FLOOR) && nextCell.getActor() == null;
+	}
+	
+	protected void randomMove(){
 		int limit = 30;
 		int counter = 0;
 		boolean validMove = false;
