@@ -38,7 +38,7 @@ public abstract class Enemy extends Actor{
 				moveCloserPlayerVertically(thisY, playerY);
 			}
 			
-		}else{
+		}else if(thisX > playerX){
 			dx = -1;
 			dy = 0;
 			nextCell = cell.getNeighbor(dx, dy);
@@ -48,6 +48,8 @@ public abstract class Enemy extends Actor{
 			}else{
 				moveCloserPlayerVertically(thisY, playerY);
 			}
+		}else{
+			moveCloserPlayerVertically(thisY, playerY);
 		}
 		
 	}
