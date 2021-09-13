@@ -1,8 +1,8 @@
-package com.codecool.dungeoncrawl.logic.elements.items;
+package com.codecool.dungeoncrawl.logic.elements;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Doors extends Item{
+public class Doors extends Element{
 	private boolean isOpen = false;
 	
 	public Doors(Cell cell){

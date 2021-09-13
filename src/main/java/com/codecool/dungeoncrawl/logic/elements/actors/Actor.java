@@ -20,7 +20,7 @@ public abstract class Actor extends Element{
 	protected int defence = -1;
 	
 	public Actor(Cell cell){
-		this.cell = cell;
+		super(cell);
 		this.cell.setActor(this);
 	}
 	

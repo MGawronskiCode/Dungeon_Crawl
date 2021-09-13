@@ -1,7 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.elements.Doors;
 import com.codecool.dungeoncrawl.logic.elements.actors.*;
-import com.codecool.dungeoncrawl.logic.elements.items.Doors;
 import lombok.Getter;
 
 import java.io.InputStream;

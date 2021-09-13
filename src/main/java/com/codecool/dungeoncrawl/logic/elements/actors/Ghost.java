@@ -18,24 +18,8 @@ public class Ghost extends Enemy{
 	}
 	
 	@Override
-	public void makeMove(Player player){
-		boolean validMove = false;
-		do{
-			validMove = prepareForMoveValidation(validMove);
-		}while(!validMove);
-	}
-	
-	protected boolean prepareForMoveValidation(boolean validMove){
-		int dx = random.nextInt(3) - 1;
-		int dy = random.nextInt(3) - 1;
-		Cell nextCell = cell.getNeighbor(dx, dy);
-		CellType nextCellType = nextCell.getType();
-		validMove = isValidMove(validMove, nextCell, nextCellType);
-		return validMove;
-	}
-	
 	protected boolean isValidMove(boolean validMove, Cell nextCell, CellType nextCellType){
-		if(nextCell.getActor() == null){
+		if((nextCellType == CellType.EMPTY || nextCellType == CellType.FLOOR || nextCellType == CellType.WALL) && nextCell.getActor() == null){
 			validMove = true;
 			cell.setActor(null);
 			nextCell.setActor(this);
