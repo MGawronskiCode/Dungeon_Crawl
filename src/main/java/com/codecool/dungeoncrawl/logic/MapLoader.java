@@ -12,8 +12,8 @@ public class MapLoader{
 	@Getter
 	private static final ArrayList<Enemy> enemies = new ArrayList<>();
 	
-	public static GameMap loadMap(){
-		InputStream is = MapLoader.class.getResourceAsStream("/map3.txt");
+	public static GameMap loadMap(String mapName){
+		InputStream is = MapLoader.class.getResourceAsStream(mapName);
 		assert is != null;
 		Scanner scanner = new Scanner(is);
 		int width = scanner.nextInt();

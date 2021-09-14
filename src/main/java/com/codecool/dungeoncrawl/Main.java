@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Main extends Application{
-	GameMap map = MapLoader.loadMap();
+	GameMap map = MapLoader.loadMap("/map3.txt");
 	Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
 	GraphicsContext context = canvas.getGraphicsContext2D();
 	Label nameLabel = new Label();
@@ -31,7 +31,7 @@ public class Main extends Application{
 	}
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception{//todo throw Exc
+	public void start(Stage primaryStage) throws Exception{
 		GridPane ui = new GridPane();
 		ui.setPrefWidth(200);
 		ui.setPadding(new Insets(10));
@@ -95,7 +95,7 @@ public class Main extends Application{
 		if(player.isEnemy(dx, dy))
 			player.attack(dx, dy, enemies);
 		else if(player.isStairs(dx, dy)){
-			//todo load next map
+			map = MapLoader.loadMap("/map.txt");//todo map list, change map iterating on this list
 		}else
 			player.move(dx, dy);
 	}
