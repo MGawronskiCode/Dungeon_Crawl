@@ -22,12 +22,24 @@ public class Player extends Actor{
 	public String getTileName(){
 		return "player";
 	}
-	
-	public void move(int dx, int dy){
+
+	public void move(int dx, int dy) {
 		Cell nextCell = cell.getNeighbor(dx, dy);
-		cell.setActor(null);
-		nextCell.setActor(this);
-		cell = nextCell;
+		boolean isMovementOk = isMovementOk(nextCell);
+		if (isMovementOk) {
+			cell.setActor(null);
+			nextCell.setActor(this);
+			cell = nextCell;
+		}
+	}
+
+	public boolean isMovementOk(Cell nextCell) {
+		String monsterInCell = null;
+		if (nextCell.getActor() != null) {
+			monsterInCell = nextCell.getActor().getTileName();
+		}
+		String tileInCell = nextCell.getTileName();
+		return !(tileInCell.equals("wall") || "skeleton".equals(monsterInCell));
 	}
 	
 	public boolean isEnemy(int dx, int dy){
