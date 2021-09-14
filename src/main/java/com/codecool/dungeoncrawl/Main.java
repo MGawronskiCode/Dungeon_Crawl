@@ -94,7 +94,9 @@ public class Main extends Application{
 	private void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies){
 		if(player.isEnemy(dx, dy))
 			player.attack(dx, dy, enemies);
-		else
+		else if(player.isStairs(dx, dy)){
+			//todo load next map
+		}else
 			player.move(dx, dy);
 	}
 	

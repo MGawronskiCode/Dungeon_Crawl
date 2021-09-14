@@ -13,7 +13,7 @@ public class MapLoader{
 	private static final ArrayList<Enemy> enemies = new ArrayList<>();
 	
 	public static GameMap loadMap(){
-		InputStream is = MapLoader.class.getResourceAsStream("/map5.txt");
+		InputStream is = MapLoader.class.getResourceAsStream("/map3.txt");
 		assert is != null;
 		Scanner scanner = new Scanner(is);
 		int width = scanner.nextInt();
@@ -91,6 +91,9 @@ public class MapLoader{
 						case '@':
 							cell.setType(CellType.FLOOR);
 							map.setPlayer(new Player(cell));
+							break;
+						case '!':
+							cell.setType(CellType.STAIRS);
 							break;
 						default:
 							throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

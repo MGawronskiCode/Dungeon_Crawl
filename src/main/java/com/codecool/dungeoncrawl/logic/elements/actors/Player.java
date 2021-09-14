@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic.elements.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,6 +34,11 @@ public class Player extends Actor{
 	public boolean isEnemy(int dx, int dy){
 		Cell nextCell = cell.getNeighbor(dx, dy);
 		return nextCell.getActor() != null;
+	}
+	
+	public boolean isStairs(int dx, int dy){
+		Cell nextCell = cell.getNeighbor(dx, dy);
+		return nextCell.getType() == CellType.STAIRS;
 	}
 	
 	public void attack(int dx, int dy, ArrayList<Enemy> enemies){
