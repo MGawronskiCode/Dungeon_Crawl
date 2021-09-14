@@ -20,4 +20,16 @@ public class Bat extends Enemy{
 		super.makeMove(player);
 		super.makeMove(player);
 	}
+	
+	@Override
+	protected boolean isPlayerNear(){
+		for(int dx = -3;dx < 5;dx++){//check cells in range 3
+			for(int dy = -3;dy < 5;dy++){
+				if(isPlayerInCell(dx, dy)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

@@ -131,7 +131,7 @@ public abstract class Enemy extends Actor{
 		return isPlayerInCell(dx, dy);
 	}
 	
-	private boolean isPlayerInCell(int dx, int dy){
+	protected boolean isPlayerInCell(int dx, int dy){
 		
 		Cell nextToCell = cell.getNeighbor(dx, dy);
 		if(nextToCell != null){

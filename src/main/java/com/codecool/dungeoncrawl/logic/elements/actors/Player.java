@@ -14,7 +14,7 @@ public class Player extends Actor{
 	
 	public Player(Cell cell){
 		super(cell);
-		setHealth(100);
+		setHealth(300);
 		setAttack(20);
 		setDefence(10);
 	}

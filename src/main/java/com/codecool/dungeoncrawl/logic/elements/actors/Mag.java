@@ -6,7 +6,7 @@ public class Mag extends Enemy{
 	public Mag(Cell cell){
 		super(cell);
 		setHealth(50);
-		setAttack(40);
+		setAttack(20);
 		setDefence(0);
 	}
 	
@@ -15,4 +15,12 @@ public class Mag extends Enemy{
 		return "mag";
 	}
 	
+	@Override
+	public void makeMove(Player player){
+		if(isPlayerNextTo() || isPlayerNear()){
+			attack(player);
+		}else{
+			randomMove();
+		}
+	}
 }
