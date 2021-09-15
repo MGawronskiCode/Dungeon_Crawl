@@ -93,8 +93,12 @@ public abstract class Enemy extends Actor{
 	}
 	
 	protected boolean moveRandomDirection(boolean validMove){
-		int dx = random.nextInt(3) - 1;
-		int dy = random.nextInt(3) - 1;
+		int dx;
+		int dy;
+		do{
+			dx = random.nextInt(3) - 1;
+			dy = random.nextInt(3) - 1;
+		}while((dx == -1 && dy == -1) || (dx == -1 && dy == 1) || (dx == 1 && dy == 1) || (dx == 1 && dy == -1));//prevent move diagonally
 		Cell nextCell = cell.getNeighbor(dx, dy);
 		CellType nextCellType = nextCell.getType();
 		validMove = isValidMove(validMove, nextCell, nextCellType);
