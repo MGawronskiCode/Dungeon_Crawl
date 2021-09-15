@@ -18,7 +18,7 @@ public enum CellType{
 	
 	public static CellType getRandomDecoration(){
 		Random r = new Random();
-		int randomDecorationInt = r.nextInt(24) + 3;//random from 3 to 27 - decorations indexes
+		int randomDecorationInt = r.nextInt(24) + 4;//random from 3 to 27 - decorations indexes
 		int i = 0;
 		for(CellType celltype : CellType.values()){
 			if(i == randomDecorationInt)

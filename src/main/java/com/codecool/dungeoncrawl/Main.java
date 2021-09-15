@@ -20,11 +20,12 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Main extends Application{
-	GameMap map = MapLoader.loadMap("/map3.txt");
-	Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
-	GraphicsContext context = canvas.getGraphicsContext2D();
-	Label nameLabel = new Label();
-	Label healthLabel = new Label();
+	private final Label nameLabel = new Label();
+	private final Label healthLabel = new Label();
+	private GameMap map = MapLoader.loadMap("/map.txt");
+	private final Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
+	private final GraphicsContext context = canvas.getGraphicsContext2D();
+	private int mapCounter = 1;
 	
 	public static void main(String[] args){
 		launch(args);
@@ -33,7 +34,7 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		GridPane ui = new GridPane();
-		ui.setPrefWidth(200);
+		ui.setPrefWidth(100);
 		ui.setPadding(new Insets(10));
 		
 		nameLabel.setText("" + map.getPlayer().getName());
@@ -95,7 +96,9 @@ public class Main extends Application{
 		if(player.isEnemy(dx, dy))
 			player.attack(dx, dy, enemies);
 		else if(player.isStairs(dx, dy)){
-			map = MapLoader.loadMap("/map.txt");//todo map list, change map iterating on this list
+			String nextMapName = String.format("/map%d.txt", mapCounter);
+			mapCounter++;
+			map = MapLoader.loadMap(nextMapName);
 		}else
 			player.move(dx, dy);
 	}
@@ -108,8 +111,6 @@ public class Main extends Application{
 				Cell cell = map.getCell(x, y);
 				if(cell.getActor() != null){
 					Tiles.drawTile(context, cell.getActor(), x, y);
-//                } else if (cell.getItem() != null) {
-//                    Tiles.drawTile(context, cell.getItem(), x, y);
 				}else{
 					Tiles.drawTile(context, cell, x, y);
 				}
