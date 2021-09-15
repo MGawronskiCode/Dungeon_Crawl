@@ -27,4 +27,9 @@ public class Ghost extends Enemy{
 		}
 		return validMove;
 	}
+	
+	@Override
+	protected boolean isValidMove(Cell nextCell, CellType nextCellType){
+		return nextCell.getActor() == null;
+	}
 }

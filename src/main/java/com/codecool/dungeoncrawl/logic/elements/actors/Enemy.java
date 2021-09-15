@@ -78,7 +78,7 @@ public abstract class Enemy extends Actor{
 		}
 	}
 	
-	private boolean isValidMove(Cell nextCell, CellType nextCellType){
+	protected boolean isValidMove(Cell nextCell, CellType nextCellType){
 		return (nextCellType == CellType.EMPTY || nextCellType == CellType.FLOOR) && nextCell.getActor() == null;
 	}
 	

@@ -19,8 +19,7 @@ public class Spider extends Enemy{
 	public void makeMove(Player player){
 		if(isPlayerNextTo()){
 			attack(player);
-			int actualAttack = getAttack();
-			setAttack(actualAttack + 5);
+			setAttack(getAttack() + 5);
 		}else if(isPlayerNear()){
 			setAttack(20);
 			moveToPlayer(player);
