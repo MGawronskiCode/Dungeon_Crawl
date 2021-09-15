@@ -29,7 +29,7 @@ public abstract class Actor extends Element{
 		player.setHealth(playerHealth - this.attack);
 		if(player.getHealth() <= 0){
 			System.out.println("game over");
-//			todo: make game over
+//			todo: game over
 		}
 	}
 	
