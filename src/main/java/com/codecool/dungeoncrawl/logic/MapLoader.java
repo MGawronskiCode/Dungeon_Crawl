@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.elements.Doors;
 import com.codecool.dungeoncrawl.logic.elements.actors.*;
+import com.codecool.dungeoncrawl.logic.items.*;
 import lombok.Getter;
 
 import java.io.InputStream;
@@ -13,7 +14,7 @@ public class MapLoader{
 	private static final ArrayList<Enemy> enemies = new ArrayList<>();
 	
 	public static GameMap loadMap(){
-		InputStream is = MapLoader.class.getResourceAsStream("/map5.txt");
+		InputStream is = MapLoader.class.getResourceAsStream("/map.txt");
 		assert is != null;
 		Scanner scanner = new Scanner(is);
 		int width = scanner.nextInt();
@@ -42,8 +43,20 @@ public class MapLoader{
 							new Doors(cell);
 							break;
 						case 'K':
-							cell.setType(CellType.FLOOR);
-//                            new Key(cell);
+							cell.setType(CellType.KEY);
+                            new Key(cell);
+                            break;
+						case 'P':
+							cell.setType(CellType.POTION);
+							new Potion(cell);
+							break;
+						case '!':
+							cell.setType(CellType.SWORD);
+							new Sword(cell);
+							break;
+						case 'H':
+							cell.setType(CellType.HAUBERK);
+							new Hauberk(cell);
 							break;
 						case 's':
 							cell.setType(CellType.FLOOR);

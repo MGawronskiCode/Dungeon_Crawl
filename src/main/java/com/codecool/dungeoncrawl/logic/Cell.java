@@ -1,6 +1,7 @@
 package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.elements.actors.Actor;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,9 +17,9 @@ public class Cell implements Drawable{
 	@Setter
 	@Getter
 	private Actor actor;
-//    @Setter
-//    @Getter
-//    private Item item;
+    @Setter
+    @Getter
+    private Item item;
 	
 	Cell(GameMap gameMap, int x, int y, CellType type){
 		this.gameMap = gameMap;
@@ -38,5 +39,10 @@ public class Cell implements Drawable{
 	@Override
 	public String getTileName(){
 		return type.getTileName();
+	}
+
+	public void removeItem() {
+		item = null;
+		type = CellType.FLOOR;
 	}
 }

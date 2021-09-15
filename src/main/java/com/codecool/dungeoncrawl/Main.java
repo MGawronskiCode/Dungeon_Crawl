@@ -25,37 +25,47 @@ public class Main extends Application{
 	GraphicsContext context = canvas.getGraphicsContext2D();
 	Label nameLabel = new Label();
 	Label healthLabel = new Label();
-	
+	Label inventoryLabel = new Label();
+	Label attackLabel = new Label();
+	Label defenceLabel = new Label();
+
 	public static void main(String[] args){
 		launch(args);
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception{//todo throw Exc
 		GridPane ui = new GridPane();
 		ui.setPrefWidth(200);
 		ui.setPadding(new Insets(10));
-		
+
 		nameLabel.setText("" + map.getPlayer().getName());
 		ui.add(new Label("Name: "), 0, 0);
 		ui.add(new Label("Health: "), 0, 1);
+		ui.add(new Label("Attack: "), 0, 2);
+		ui.add(new Label("Defence: "), 0, 3);
+		ui.add(new Label("Inventory: "),0,4);
 		ui.add(nameLabel, 1, 0);
 		ui.add(healthLabel, 1, 1);
-		
+		ui.add(attackLabel, 1, 2);
+		ui.add(defenceLabel, 1, 3);
+		ui.add(inventoryLabel, 0, 5);
+
+
 		BorderPane borderPane = new BorderPane();
-		
+
 		borderPane.setCenter(canvas);
 		borderPane.setRight(ui);
-		
+
 		Scene scene = new Scene(borderPane);
 		primaryStage.setScene(scene);
 		refresh();
 		scene.setOnKeyPressed(this::onKeyPressed);
-		
+
 		primaryStage.setTitle("Dungeon Crawl");
 		primaryStage.show();
 	}
-	
+
 	private void onKeyPressed(KeyEvent keyEvent){
 		ArrayList<Enemy> enemies = MapLoader.getEnemies();
 		Player player = map.getPlayer();
@@ -79,6 +89,9 @@ public class Main extends Application{
 					dx = 1;
 					makeMove(player, dx, dy, enemies);
 					break;
+                case SPACE:
+				    player.pickItem();
+					break;
 			}
 		}catch(Exception ignored){
 		}
@@ -90,14 +103,14 @@ public class Main extends Application{
 		}
 		refresh();
 	}
-	
+
 	private void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies){
 		if(player.isEnemy(dx, dy))
 			player.attack(dx, dy, enemies);
 		else
 			player.move(dx, dy);
 	}
-	
+
 	private void refresh(){
 		context.setFill(Color.BLACK);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -114,5 +127,9 @@ public class Main extends Application{
 			}
 		}
 		healthLabel.setText("" + map.getPlayer().getHealth());
+		inventoryLabel.setText(map.getPlayer().getInventory().toString());
+		attackLabel.setText("" + map.getPlayer().getAttack());
+		defenceLabel.setText("" + map.getPlayer().getDefence());
+
 	}
 }

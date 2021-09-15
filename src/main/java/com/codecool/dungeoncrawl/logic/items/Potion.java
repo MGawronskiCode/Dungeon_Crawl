@@ -2,18 +2,20 @@ package com.codecool.dungeoncrawl.logic.items;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 
-public class Key extends Item {
-    public Key(Cell cell) {
-        super(cell, "key");
+public class Potion extends Item {
+    public Potion(Cell cell) {
+        super(cell, "potion");
     }
+
+    //    TODO Health (Health +30)
 
     @Override
     public String getTileName() {
-        return "key";
+        return "potion";
     }
 
     @Override
     public String toString() {
-        return "Key";
+        return "Potion";
     }
 }

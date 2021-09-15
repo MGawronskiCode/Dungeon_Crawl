@@ -13,14 +13,6 @@ public abstract class Item implements Drawable {
         this.name = name;
     }
 
-    public void pick() {
-//        public void pick(inventory)
-//        TODO cell.setItem(null);
-//        TODO this.cell = null;
-//        TODO inventory.put(this);
-//        TODO print inventory
-    }
-
     public Cell getCell() {
         return cell;
     }
