@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.logic.elements.Door;
 import com.codecool.dungeoncrawl.logic.elements.actors.Actor;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class Cell implements Drawable{
 	@Setter
 	@Getter
 	private Actor actor;
+	private Door door;
 //    @Setter
 //    @Getter
 //    private Item item;
@@ -38,5 +40,13 @@ public class Cell implements Drawable{
 	@Override
 	public String getTileName(){
 		return type.getTileName();
+	}
+
+	public void setDoor(Door door) {
+		this.door = door;
+	}
+
+	public Door getDoor() {
+		return door;
 	}
 }

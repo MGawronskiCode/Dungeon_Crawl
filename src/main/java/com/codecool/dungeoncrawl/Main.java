@@ -35,7 +35,7 @@ public class Main extends Application{
 		GridPane ui = new GridPane();
 		ui.setPrefWidth(200);
 		ui.setPadding(new Insets(10));
-		
+		//map.getPlayer().setName()
 		nameLabel.setText("" + map.getPlayer().getName());
 		ui.add(new Label("Name: "), 0, 0);
 		ui.add(new Label("Health: "), 0, 1);
@@ -79,6 +79,7 @@ public class Main extends Application{
 					dx = 1;
 					makeMove(player, dx, dy, enemies);
 					break;
+					//CASE space pickup item//
 			}
 		}catch(Exception ignored){
 		}
@@ -108,7 +109,11 @@ public class Main extends Application{
 					Tiles.drawTile(context, cell.getActor(), x, y);
 //                } else if (cell.getItem() != null) {
 //                    Tiles.drawTile(context, cell.getItem(), x, y);
-				}else{
+
+				} else if(cell.getDoor() != null) {
+					Tiles.drawTile(context,cell.getDoor(), x,y);
+				}
+				else{
 					Tiles.drawTile(context, cell, x, y);
 				}
 			}

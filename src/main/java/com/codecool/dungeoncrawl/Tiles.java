@@ -30,8 +30,8 @@ public class Tiles{
 		//items
 		tileMap.put("sword", new Tile(0, 30));
 		tileMap.put("key", new Tile(16, 23));
-		tileMap.put("closedDoors", new Tile(0, 9));
-		tileMap.put("openedDoors", new Tile(2, 9));
+		tileMap.put("closedDoor", new Tile(0, 9));
+		tileMap.put("openedDoor", new Tile(2, 9));
 		tileMap.put("heart", new Tile(27, 9));
 		//decorations
 		tileMap.put("decoration0", new Tile(1, 0));

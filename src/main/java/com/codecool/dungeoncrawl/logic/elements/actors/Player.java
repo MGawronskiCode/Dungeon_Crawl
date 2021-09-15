@@ -34,12 +34,22 @@ public class Player extends Actor{
 	}
 
 	public boolean isMovementOk(Cell nextCell) {
-		String monsterInCell = null;
-		if (nextCell.getActor() != null) {
-			monsterInCell = nextCell.getActor().getTileName();
+		if (cell.getDoor() != null ) {
+			if (cell.getDoor().isOpen()) {
+				return nextCell.getActor() == null;
+			} else {
+				//TODO check if key is in inventory
+				if (true) {
+					//TODO usuwać klucz z inventory
+					cell.getDoor().open();
+					return true;
+				} else {
+					return false;
+				}
+			}
 		}
 		String tileInCell = nextCell.getTileName();
-		return !(tileInCell.equals("wall") || "skeleton".equals(monsterInCell));
+		return !(tileInCell.equals("wall") || nextCell.getActor() != null);
 	}
 	
 	public boolean isEnemy(int dx, int dy){
