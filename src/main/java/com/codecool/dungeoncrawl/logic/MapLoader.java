@@ -54,6 +54,11 @@ public class MapLoader{
 							new Skeleton(cell);
 							enemies.add((Enemy) cell.getActor());
 							break;
+						case 'd':
+							cell.setType(CellType.FLOOR);
+							new Demon(cell, map);
+							enemies.add((Enemy) cell.getActor());
+							break;
 						case 'm':
 							cell.setType(CellType.FLOOR);
 							new Mag(cell);

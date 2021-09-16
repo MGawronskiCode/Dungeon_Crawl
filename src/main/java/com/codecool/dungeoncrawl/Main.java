@@ -104,7 +104,6 @@ public class Main<T> extends Application{
 			clearElements((ArrayList<T>) enemies);
 			enemies.clear();
 			loadNextMap(enemies);
-			System.out.println("load next map");
 		}else
 			player.move(dx, dy);
 	}
