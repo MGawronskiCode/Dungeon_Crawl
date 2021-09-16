@@ -32,6 +32,8 @@ public class Main<T> extends Application{
 	private final GraphicsContext context = canvas.getGraphicsContext2D();
 	private int mapCounter = 1;
 	
+	public static int tmpVisibleCellsCounter = 0;
+	
 	public static void main(String[] args){
 		launch(args);
 	}

@@ -16,6 +16,9 @@ public class Cell implements Drawable{
 	@Setter
 	@Getter
 	private Actor actor;
+	@Setter
+	@Getter
+	protected boolean isVisible;
 //    @Setter
 //    @Getter
 //    private Item item;
@@ -25,6 +28,7 @@ public class Cell implements Drawable{
 		this.x = x;
 		this.y = y;
 		this.type = type;
+		this.isVisible = false;
 	}
 	
 	public Cell getNeighbor(int dx, int dy){

@@ -1,5 +1,6 @@
 package com.codecool.dungeoncrawl.logic.elements.actors;
 
+import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import lombok.Getter;
@@ -15,6 +16,7 @@ public class Player extends Actor{
 	
 	public Player(Cell cell){
 		super(cell);
+		revealNearbyCells();
 		setHealth(300);
 		setAttack(20);
 		setDefence(0);
@@ -22,6 +24,7 @@ public class Player extends Actor{
 	
 	public Player(Cell cell, int health){
 		super(cell);
+		revealNearbyCells();
 		setHealth(health);
 		setAttack(20);
 		setDefence(0);
@@ -36,6 +39,7 @@ public class Player extends Actor{
 		cell.setActor(null);
 		nextCell.setActor(this);
 		cell = nextCell;
+		revealNearbyCells();
 	}
 	
 	public boolean isEnemy(int dx, int dy){
@@ -71,5 +75,20 @@ public class Player extends Actor{
 	private void removeAttackedEnemy(ArrayList<Enemy> enemies, Cell nextCell, Enemy attackedEnemy){
 		enemies.removeIf(enemy -> enemy.equals(attackedEnemy));
 		nextCell.setActor(null);
+	}
+	
+	private void revealNearbyCells(){
+		for(int dx = -5;dx < 6;dx++){//check cells in range 3
+			for(int dy = -5;dy < 6;dy++){
+				try{
+					Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
+					if(!nearbyToPlayer.isVisible()){
+						nearbyToPlayer.setVisible(true);
+						Main.tmpVisibleCellsCounter++;
+					}
+				}catch(Exception ignored){
+				}
+			}
+		}
 	}
 }
