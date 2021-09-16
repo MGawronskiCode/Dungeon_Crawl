@@ -7,7 +7,7 @@ public class Warrior extends Enemy{
 		super(cell);
 		setHealth(50);
 		setAttack(30);
-		setDefence(20);
+		setDefence(15);
 	}
 	
 	@Override

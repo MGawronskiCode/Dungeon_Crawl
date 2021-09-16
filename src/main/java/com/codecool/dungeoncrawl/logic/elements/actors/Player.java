@@ -17,7 +17,14 @@ public class Player extends Actor{
 		super(cell);
 		setHealth(300);
 		setAttack(20);
-		setDefence(10);
+		setDefence(0);
+	}
+	
+	public Player(Cell cell, int health){
+		super(cell);
+		setHealth(health);
+		setAttack(20);
+		setDefence(0);
 	}
 	
 	public String getTileName(){
@@ -44,11 +51,25 @@ public class Player extends Actor{
 	public void attack(int dx, int dy, ArrayList<Enemy> enemies){
 		Cell nextCell = cell.getNeighbor(dx, dy);
 		Enemy attackedEnemy = (Enemy) nextCell.getActor();
-		int enemyHealth = attackedEnemy.getHealth();
-		attackedEnemy.setHealth(enemyHealth - this.attack);
-		if(enemyHealth <= 0){
-			enemies.removeIf(enemy -> enemy.equals(attackedEnemy));
-			nextCell.setActor(null);
+		int enemyHealthAfterAttack = reduceEnemyHealthAfterAttack(attackedEnemy);
+		if(enemyKilled(enemyHealthAfterAttack)){
+			removeAttackedEnemy(enemies, nextCell, attackedEnemy);
 		}
+	}
+	
+	private int reduceEnemyHealthAfterAttack(Enemy attackedEnemy){
+		int enemyHealth = attackedEnemy.getHealth();
+		int enemyDefence = attackedEnemy.getDefence();
+		attackedEnemy.setHealth(enemyHealth + enemyDefence - this.attack);
+		return enemyHealth;
+	}
+	
+	private boolean enemyKilled(int enemyHealth){
+		return enemyHealth <= 0;
+	}
+	
+	private void removeAttackedEnemy(ArrayList<Enemy> enemies, Cell nextCell, Enemy attackedEnemy){
+		enemies.removeIf(enemy -> enemy.equals(attackedEnemy));
+		nextCell.setActor(null);
 	}
 }

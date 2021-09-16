@@ -16,10 +16,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class Main extends Application{
+public class Main<T> extends Application{
+	@Setter
+	@Getter
+	static private Player player;
 	private final Label nameLabel = new Label();
 	private final Label healthLabel = new Label();
 	private GameMap map = MapLoader.loadMap("/map.txt");
@@ -37,7 +42,7 @@ public class Main extends Application{
 		ui.setPrefWidth(100);
 		ui.setPadding(new Insets(10));
 		
-		nameLabel.setText("" + map.getPlayer().getName());
+		nameLabel.setText("" + player.getName());
 		ui.add(new Label("Name: "), 0, 0);
 		ui.add(new Label("Health: "), 0, 1);
 		ui.add(nameLabel, 1, 0);
@@ -59,7 +64,6 @@ public class Main extends Application{
 	
 	private void onKeyPressed(KeyEvent keyEvent){
 		ArrayList<Enemy> enemies = MapLoader.getEnemies();
-		Player player = map.getPlayer();
 		try{
 			int dx = 0;
 			int dy = 0;
@@ -96,11 +100,31 @@ public class Main extends Application{
 		if(player.isEnemy(dx, dy))
 			player.attack(dx, dy, enemies);
 		else if(player.isStairs(dx, dy)){
-			String nextMapName = String.format("/map%d.txt", mapCounter);
-			mapCounter++;
-			map = MapLoader.loadMap(nextMapName);
+//			clearMap(enemies, null);
+			clearElements((ArrayList<T>) enemies);
+			enemies.clear();
+			loadNextMap(enemies);
+			System.out.println("load next map");
 		}else
 			player.move(dx, dy);
+	}
+
+//	private void clearMap(ArrayList<Enemy> enemies, ArrayList<Item> items){
+//		clearElements((ArrayList<T>) enemies);
+//		clearElements((ArrayList<T>) items);
+//	}
+	
+	private void clearElements(ArrayList<T> elements){
+		for(int i = 0;i < elements.size();i++){
+			elements.set(i, null);
+		}
+	}
+	
+	private void loadNextMap(ArrayList<Enemy> enemies){
+		String nextMapName = String.format("/map%d.txt", mapCounter);
+		mapCounter++;
+		map = MapLoader.loadMap(nextMapName);
+		enemies = MapLoader.getEnemies();
 	}
 	
 	private void refresh(){
@@ -116,6 +140,6 @@ public class Main extends Application{
 				}
 			}
 		}
-		healthLabel.setText("" + map.getPlayer().getHealth());
+		healthLabel.setText("" + player.getHealth());
 	}
 }

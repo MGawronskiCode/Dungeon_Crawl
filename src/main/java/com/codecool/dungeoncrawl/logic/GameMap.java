@@ -1,8 +1,6 @@
 package com.codecool.dungeoncrawl.logic;
 
-import com.codecool.dungeoncrawl.logic.elements.actors.Player;
 import lombok.Getter;
-import lombok.Setter;
 
 
 @Getter
@@ -10,9 +8,6 @@ public class GameMap{
 	private final int width;
 	private final int height;
 	private final Cell[][] cells;
-	
-	@Setter
-	private Player player;
 	
 	public GameMap(int width, int height, CellType defaultCellType){
 		this.width = width;
