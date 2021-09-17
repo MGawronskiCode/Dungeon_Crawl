@@ -17,6 +17,7 @@ public class Tiles{
 		tileMap.put("empty", new Tile(0, 0));
 		tileMap.put("wall", new Tile(10, 17));
 		tileMap.put("floor", new Tile(2, 0));
+		tileMap.put("stairs", new Tile(3, 6));
 		//actors
 		tileMap.put("player", new Tile(27, 0));
 		tileMap.put("skeleton", new Tile(29, 6));
@@ -27,12 +28,15 @@ public class Tiles{
 		tileMap.put("troll", new Tile(30, 6));
 		tileMap.put("mag", new Tile(24, 1));
 		tileMap.put("echinops", new Tile(24, 0));
+		tileMap.put("demon", new Tile(24, 8));
 		//items
 		tileMap.put("sword", new Tile(0, 30));
 		tileMap.put("key", new Tile(16, 23));
 		tileMap.put("closedDoor", new Tile(0, 9));
 		tileMap.put("openedDoor", new Tile(2, 9));
 		tileMap.put("heart", new Tile(27, 9));
+		tileMap.put("potion", new Tile(17, 25));
+		tileMap.put("hauberk", new Tile(3, 23));
 		//decorations
 		tileMap.put("decoration0", new Tile(1, 0));
 		tileMap.put("decoration1", new Tile(2, 0));

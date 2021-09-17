@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic;
 
 import com.codecool.dungeoncrawl.logic.elements.Door;
 import com.codecool.dungeoncrawl.logic.elements.actors.Actor;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,15 +19,19 @@ public class Cell implements Drawable{
 	@Getter
 	private Actor actor;
 	private Door door;
-//    @Setter
-//    @Getter
-//    private Item item;
-	
-	Cell(GameMap gameMap, int x, int y, CellType type){
+	@Setter
+	@Getter
+	protected boolean isVisible;
+	@Setter
+	@Getter
+	private Item item;
+
+	public Cell(GameMap gameMap, int x, int y, CellType type){
 		this.gameMap = gameMap;
 		this.x = x;
 		this.y = y;
 		this.type = type;
+		this.isVisible = false;
 	}
 	
 	public Cell getNeighbor(int dx, int dy){
@@ -48,5 +53,10 @@ public class Cell implements Drawable{
 
 	public Door getDoor() {
 		return door;
+	}
+
+	public void removeItem(){
+		item = null;
+		type = CellType.FLOOR;
 	}
 }

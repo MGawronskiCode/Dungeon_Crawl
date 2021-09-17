@@ -16,32 +16,47 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class Main extends Application{
-	GameMap map = MapLoader.loadMap();
-	Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
-	GraphicsContext context = canvas.getGraphicsContext2D();
-	Label nameLabel = new Label();
-	Label healthLabel = new Label();
+public class Main<T> extends Application{
+	@Setter
+	@Getter
+	static private Player player;
+	private final Label nameLabel = new Label();
+	private final Label healthLabel = new Label();
+	Label inventoryLabel = new Label();
+	Label attackLabel = new Label();
+	Label defenceLabel = new Label();
+	private GameMap map = MapLoader.loadMap("/map.txt");
+	private final Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
+	private final GraphicsContext context = canvas.getGraphicsContext2D();
+	private int mapNameIncrementer = 1;
 	
 	public static void main(String[] args){
 		launch(args);
 	}
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception{//todo throw Exc
+	public void start(Stage primaryStage) throws Exception{
 		GridPane ui = new GridPane();
-		ui.setPrefWidth(200);
+		ui.setPrefWidth(100);
 		ui.setPadding(new Insets(10));
 		//map.getPlayer().setName()
-		nameLabel.setText("" + map.getPlayer().getName());
+		nameLabel.setText("" + player.getName());
 		ui.add(new Label("Name: "), 0, 0);
 		ui.add(new Label("Health: "), 0, 1);
+		ui.add(new Label("Attack: "), 0, 2);
+		ui.add(new Label("Defence: "), 0, 3);
+		ui.add(new Label("Inventory: "), 0, 4);
 		ui.add(nameLabel, 1, 0);
 		ui.add(healthLabel, 1, 1);
-		
+		ui.add(attackLabel, 1, 2);
+		ui.add(defenceLabel, 1, 3);
+		ui.add(inventoryLabel, 0, 5);
+
 		BorderPane borderPane = new BorderPane();
 		
 		borderPane.setCenter(canvas);
@@ -51,14 +66,13 @@ public class Main extends Application{
 		primaryStage.setScene(scene);
 		refresh();
 		scene.setOnKeyPressed(this::onKeyPressed);
-		
+
 		primaryStage.setTitle("Dungeon Crawl");
 		primaryStage.show();
 	}
-	
+
 	private void onKeyPressed(KeyEvent keyEvent){
 		ArrayList<Enemy> enemies = MapLoader.getEnemies();
-		Player player = map.getPlayer();
 		try{
 			int dx = 0;
 			int dy = 0;
@@ -79,7 +93,9 @@ public class Main extends Application{
 					dx = 1;
 					makeMove(player, dx, dy, enemies);
 					break;
-					//CASE space pickup item//
+				case SPACE:
+					player.pickItem();
+					break;
 			}
 		}catch(Exception ignored){
 		}
@@ -92,13 +108,37 @@ public class Main extends Application{
 		refresh();
 	}
 	
+	//todo move to the Player class
 	private void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies){
 		if(player.isEnemy(dx, dy))
 			player.attack(dx, dy, enemies);
-		else
+		else if(player.isStairs(dx, dy)){
+//			clearMap(enemies, null);
+			clearElements((ArrayList<T>) enemies);
+			enemies.clear();
+			loadNextMap(enemies);
+		}else
 			player.move(dx, dy);
 	}
-	
+
+//	private void clearMap(ArrayList<Enemy> enemies, ArrayList<Item> items){
+//		clearElements((ArrayList<T>) enemies);
+//		clearElements((ArrayList<T>) items);
+//	}
+
+	private void clearElements(ArrayList<T> elements){
+		for(int i = 0;i < elements.size();i++){
+			elements.set(i, null);
+		}
+	}
+
+	private void loadNextMap(ArrayList<Enemy> enemies){
+		String nextMapName = String.format("/map%d.txt", mapNameIncrementer);
+		mapNameIncrementer++;
+		map = MapLoader.loadMap(nextMapName);
+		enemies = MapLoader.getEnemies();
+	}
+
 	private void refresh(){
 		context.setFill(Color.BLACK);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -118,6 +158,10 @@ public class Main extends Application{
 				}
 			}
 		}
-		healthLabel.setText("" + map.getPlayer().getHealth());
+		healthLabel.setText("" + player.getHealth());
+		inventoryLabel.setText(player.getInventory().toString());
+		attackLabel.setText("" + player.getAttack());
+		defenceLabel.setText("" + player.getDefence());
+
 	}
 }
