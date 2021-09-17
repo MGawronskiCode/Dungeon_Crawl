@@ -2,6 +2,7 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
+import com.codecool.dungeoncrawl.logic.items.Inventory;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,8 @@ public class Player extends Actor{
 	@Getter
 	@Setter
 	private String name;
+	@Getter
+	private final Inventory inventory = new Inventory();
 	
 	public Player(Cell cell){
 		super(cell);
@@ -29,21 +32,29 @@ public class Player extends Actor{
 		setDefence(0);
 	}
 	
+	public int getAttack(){
+		return super.getAttack() + inventory.getAttack();
+	}
+	
+	public int getDefence(){
+		return super.getDefence() + inventory.getDefence();
+	}
+	
 	public String getTileName(){
 		return "player";
 	}
-
-	public void move(int dx, int dy) {
+	
+	public void move(int dx, int dy){
 		Cell nextCell = cell.getNeighbor(dx, dy);
 		boolean isMovementOk = isMovementOk(nextCell);
-		if (isMovementOk) {
+		if(isMovementOk){
 			cell.setActor(null);
 			nextCell.setActor(this);
 			cell = nextCell;
 			revealNearbyCells();
 		}
 	}
-
+	
 	public boolean isMovementOk(Cell nextCell) {
 		String monsterInCell = null;
 		if (nextCell.getActor() != null) {
@@ -99,6 +110,13 @@ public class Player extends Actor{
 				}catch(Exception ignored){
 				}
 			}
+		}
+	}
+	
+	public void pickItem(){
+		if(cell.getItem() != null){
+			inventory.addItem(cell.getItem());
+			cell.removeItem();
 		}
 	}
 }

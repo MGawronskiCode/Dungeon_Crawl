@@ -3,7 +3,7 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.logic.elements.Doors;
 import com.codecool.dungeoncrawl.logic.elements.actors.*;
-import com.codecool.dungeoncrawl.logic.elements.items.Item;
+import com.codecool.dungeoncrawl.logic.items.*;
 import lombok.Getter;
 
 import java.io.InputStream;
@@ -46,8 +46,20 @@ public class MapLoader{
 							new Doors(cell);
 							break;
 						case 'K':
-							cell.setType(CellType.FLOOR);
-//                            new Key(cell);
+							cell.setType(CellType.KEY);
+							new Key(cell);
+							break;
+						case 'P':
+							cell.setType(CellType.POTION);
+							new Potion(cell);
+							break;
+						case '!':
+							cell.setType(CellType.SWORD);
+							new Sword(cell);
+							break;
+						case 'H':
+							cell.setType(CellType.HAUBERK);
+							new Hauberk(cell);
 							break;
 						case 's':
 							cell.setType(CellType.FLOOR);
@@ -104,7 +116,7 @@ public class MapLoader{
 							else
 								Main.setPlayer(new Player(cell, Main.getPlayer().getHealth()));
 							break;
-						case '!':
+						case '+':
 							cell.setType(CellType.STAIRS);
 							break;
 						default:
