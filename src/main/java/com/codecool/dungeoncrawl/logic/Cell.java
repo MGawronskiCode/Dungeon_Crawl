@@ -16,15 +16,19 @@ public class Cell implements Drawable{
 	@Setter
 	@Getter
 	private Actor actor;
+	@Setter
+	@Getter
+	protected boolean isVisible;
 //    @Setter
 //    @Getter
 //    private Item item;
 	
-	Cell(GameMap gameMap, int x, int y, CellType type){
+	public Cell(GameMap gameMap, int x, int y, CellType type){
 		this.gameMap = gameMap;
 		this.x = x;
 		this.y = y;
 		this.type = type;
+		this.isVisible = false;
 	}
 	
 	public Cell getNeighbor(int dx, int dy){

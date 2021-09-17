@@ -1,9 +1,0 @@
-///////////////////////////
-
-###### ściany
-.... podłoga
-@ gracz
-s szkieletor
-K klucz
-D drzwi
-I itemie

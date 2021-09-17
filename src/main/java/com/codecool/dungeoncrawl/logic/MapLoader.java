@@ -1,7 +1,9 @@
 package com.codecool.dungeoncrawl.logic;
 
+import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.logic.elements.Doors;
 import com.codecool.dungeoncrawl.logic.elements.actors.*;
+import com.codecool.dungeoncrawl.logic.elements.items.Item;
 import lombok.Getter;
 
 import java.io.InputStream;
@@ -11,9 +13,11 @@ import java.util.Scanner;
 public class MapLoader{
 	@Getter
 	private static final ArrayList<Enemy> enemies = new ArrayList<>();
+	@Getter
+	private static final ArrayList<Item> items = new ArrayList<>();
 	
-	public static GameMap loadMap(){
-		InputStream is = MapLoader.class.getResourceAsStream("/map5.txt");
+	public static GameMap loadMap(String mapName){
+		InputStream is = MapLoader.class.getResourceAsStream(mapName);
 		assert is != null;
 		Scanner scanner = new Scanner(is);
 		int width = scanner.nextInt();
@@ -48,6 +52,11 @@ public class MapLoader{
 						case 's':
 							cell.setType(CellType.FLOOR);
 							new Skeleton(cell);
+							enemies.add((Enemy) cell.getActor());
+							break;
+						case 'd':
+							cell.setType(CellType.FLOOR);
+							new Demon(cell, map);
 							enemies.add((Enemy) cell.getActor());
 							break;
 						case 'm':
@@ -90,7 +99,13 @@ public class MapLoader{
 							break;
 						case '@':
 							cell.setType(CellType.FLOOR);
-							map.setPlayer(new Player(cell));
+							if(Main.getPlayer() == null)
+								Main.setPlayer(new Player(cell));
+							else
+								Main.setPlayer(new Player(cell, Main.getPlayer().getHealth()));
+							break;
+						case '!':
+							cell.setType(CellType.STAIRS);
 							break;
 						default:
 							throw new RuntimeException("Unrecognized character: '" + line.charAt(x) + "'");

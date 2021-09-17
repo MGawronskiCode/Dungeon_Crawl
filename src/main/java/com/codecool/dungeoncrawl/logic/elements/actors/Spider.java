@@ -15,4 +15,22 @@ public class Spider extends Enemy{
 		return "spider";
 	}
 	
+	@Override
+	public void makeMove(Player player){
+		if(isPlayerNextTo()){
+			attack(player);
+			setAttack(getAttack() + 5);
+		}else if(isPlayerNear()){
+			setAttack(20);
+			moveToPlayer(player);
+		}else{
+			setAttack(20);
+			randomMove();
+		}
+	}
+	
+	@Override
+	public void attack(Player player){
+		super.attack(player);
+	}
 }

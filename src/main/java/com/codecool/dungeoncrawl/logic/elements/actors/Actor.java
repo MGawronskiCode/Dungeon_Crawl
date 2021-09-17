@@ -11,13 +11,13 @@ public abstract class Actor extends Element{
 	protected Random random = new Random();
 	@Getter
 	@Setter
-	protected int health = -1;
+	protected int health;
 	@Getter
 	@Setter
-	protected int attack = -1;
+	protected int attack;
 	@Setter
 	@Getter
-	protected int defence = -1;
+	protected int defence;
 	
 	public Actor(Cell cell){
 		super(cell);
@@ -26,11 +26,20 @@ public abstract class Actor extends Element{
 	
 	public void attack(Player player){
 		int playerHealth = player.getHealth();
-		player.setHealth(playerHealth - this.attack);
-		if(player.getHealth() <= 0){
+		int playerDefence = player.getDefence();
+		reducePlayerHealth(player, playerHealth, playerDefence);
+		if(playerKilled(player)){
 			System.out.println("game over");
-//			todo: make game over
+//			todo: game over
 		}
+	}
+	
+	private void reducePlayerHealth(Player player, int playerHealth, int playerDefence){
+		player.setHealth(playerHealth + playerDefence - this.attack);
+	}
+	
+	private boolean playerKilled(Player player){
+		return player.getHealth() <= 0;
 	}
 	
 	public Cell getCell(){
