@@ -35,6 +35,8 @@ public class Tiles{
 		tileMap.put("closedDoors", new Tile(0, 9));
 		tileMap.put("openedDoors", new Tile(2, 9));
 		tileMap.put("heart", new Tile(27, 9));
+		tileMap.put("potion", new Tile(17, 25));
+		tileMap.put("hauberk", new Tile(3, 23));
 		//decorations
 		tileMap.put("decoration0", new Tile(1, 0));
 		tileMap.put("decoration1", new Tile(2, 0));
