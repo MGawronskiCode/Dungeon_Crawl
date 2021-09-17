@@ -30,9 +30,7 @@ public class Main<T> extends Application{
 	private GameMap map = MapLoader.loadMap("/map.txt");
 	private final Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
 	private final GraphicsContext context = canvas.getGraphicsContext2D();
-	private int mapCounter = 1;
-	
-	public static int tmpVisibleCellsCounter = 0;
+	private int mapNameIncrementer = 1;
 	
 	public static void main(String[] args){
 		launch(args);
@@ -98,6 +96,7 @@ public class Main<T> extends Application{
 		refresh();
 	}
 	
+	//todo move to the Player class
 	private void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies){
 		if(player.isEnemy(dx, dy))
 			player.attack(dx, dy, enemies);
@@ -122,8 +121,8 @@ public class Main<T> extends Application{
 	}
 	
 	private void loadNextMap(ArrayList<Enemy> enemies){
-		String nextMapName = String.format("/map%d.txt", mapCounter);
-		mapCounter++;
+		String nextMapName = String.format("/map%d.txt", mapNameIncrementer);
+		mapNameIncrementer++;
 		map = MapLoader.loadMap(nextMapName);
 		enemies = MapLoader.getEnemies();
 	}

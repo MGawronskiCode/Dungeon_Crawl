@@ -1,6 +1,5 @@
 package com.codecool.dungeoncrawl.logic.elements.actors;
 
-import com.codecool.dungeoncrawl.Main;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import lombok.Getter;
@@ -84,7 +83,6 @@ public class Player extends Actor{
 					Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
 					if(!nearbyToPlayer.isVisible()){
 						nearbyToPlayer.setVisible(true);
-						Main.tmpVisibleCellsCounter++;
 					}
 				}catch(Exception ignored){
 				}
