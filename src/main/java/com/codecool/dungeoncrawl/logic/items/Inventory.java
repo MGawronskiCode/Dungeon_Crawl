@@ -4,15 +4,19 @@ import java.util.ArrayList;
 
 public class Inventory{
     
-    private static final ArrayList<Item> items = new ArrayList<>();
+    private final ArrayList<Item> items = new ArrayList<>();
     
-    public static ArrayList<Item> getItems(){
+    public ArrayList<Item> getItems(){
         return items;
     }
     
     public void addItem(Item item){
         items.add(item);
         System.out.println(items);
+    }
+
+    public void removeItem(Item item) {
+        items.remove(item);
     }
     
     @Override

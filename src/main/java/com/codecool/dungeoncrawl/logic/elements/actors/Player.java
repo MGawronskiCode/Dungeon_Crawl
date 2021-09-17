@@ -3,10 +3,12 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.items.Inventory;
+import com.codecool.dungeoncrawl.logic.items.Item;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class Player extends Actor{
 	
@@ -54,20 +56,20 @@ public class Player extends Actor{
 			revealNearbyCells();
 		}
 	}
-	
+
 	public boolean isMovementOk(Cell nextCell) {
-		if (cell.getDoor() != null ) {
-			if (cell.getDoor().isOpen()) {
+		if (nextCell.getDoor() != null) {
+			if (nextCell.getDoor().isOpen()) {
 				return nextCell.getActor() == null;
 			} else {
-				//TODO check if key is in inventory
-				if (true) {
-					//TODO usuwać klucz z inventory
-					cell.getDoor().open();
-					return true;
-				} else {
-					return false;
+				for (Item item : inventory.getItems()) {
+					if (item.getTileName().equals("key")) {
+						inventory.removeItem(item);
+						nextCell.getDoor().open();
+						return true;
+					}
 				}
+				return false;
 			}
 		}
 		String tileInCell = nextCell.getTileName();
