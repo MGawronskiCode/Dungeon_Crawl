@@ -30,7 +30,7 @@ public class Main<T> extends Application{
 	Label inventoryLabel = new Label();
 	Label attackLabel = new Label();
 	Label defenceLabel = new Label();
-	private GameMap map = MapLoader.loadMap("/map1.txt");
+	private GameMap map = MapLoader.loadMap("/map.txt");
 	private final Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
 	private final GraphicsContext context = canvas.getGraphicsContext2D();
 	private int mapNameIncrementer = 1;

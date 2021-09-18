@@ -79,9 +79,19 @@ public abstract class Enemy extends Actor{
 	}
 	
 	protected boolean isValidMove(Cell nextCell, CellType nextCellType){
-		return (nextCellType == CellType.EMPTY || nextCellType == CellType.FLOOR) && nextCell.getActor() == null;
+
+		boolean isDoorClosed = nextCell.getDoor() != null && !(nextCell.getDoor().isOpen());
+
+		if (nextCell.getActor() != null) {
+			return false;
+		}
+		if (nextCellType != CellType.FLOOR && nextCellType != CellType.EMPTY) {
+			return false;
+		}
+		return !isDoorClosed;
 	}
-	
+
+
 	protected void randomMove(){
 		int limit = 30;
 		int counter = 0;
@@ -101,12 +111,12 @@ public abstract class Enemy extends Actor{
 		}while((dx == -1 && dy == -1) || (dx == -1 && dy == 1) || (dx == 1 && dy == 1) || (dx == 1 && dy == -1));//prevent move diagonally
 		Cell nextCell = cell.getNeighbor(dx, dy);
 		CellType nextCellType = nextCell.getType();
-		validMove = isValidMove(validMove, nextCell, nextCellType);
+		validMove = isValidMove(validMove,nextCell, nextCellType);
 		return validMove;
 	}
 	
 	protected boolean isValidMove(boolean validMove, Cell nextCell, CellType nextCellType){
-		if((nextCellType == CellType.EMPTY || nextCellType == CellType.FLOOR) && nextCell.getActor() == null){
+		if(isValidMove(nextCell, nextCellType)){
 			validMove = true;
 			move(nextCell);
 		}
