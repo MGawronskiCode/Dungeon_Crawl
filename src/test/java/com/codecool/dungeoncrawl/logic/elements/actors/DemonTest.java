@@ -28,5 +28,13 @@ class DemonTest {
     assertEquals(10, demon.getTeleportCountdown());
   }
 
+  @Test
+  public void whenGetTileNameRun_returnCorrectValue() {
+    //when
+    String getTileNameReturn = demon.getTileName();
+    //then
+    assertEquals("demon", getTileNameReturn);
+  }
+
 
 }
