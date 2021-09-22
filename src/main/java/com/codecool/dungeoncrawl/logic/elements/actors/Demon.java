@@ -3,13 +3,15 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
+import lombok.Getter;
 
 import java.util.Objects;
 import java.util.Random;
 
+@Getter
 public class Demon extends Enemy {
   private final GameMap actualMap;
-  private int teleportCountdown = 10;
+  private int teleportCountdown;
 
   public Demon(Cell cell, GameMap actualMap) {
     super(cell);
@@ -17,6 +19,7 @@ public class Demon extends Enemy {
     this.attack = 20;
     this.defence = 999;
     this.actualMap = actualMap;
+    this.teleportCountdown = 10;
   }
 
   @Override

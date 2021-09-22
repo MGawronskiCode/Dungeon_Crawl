@@ -42,7 +42,7 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) throws Exception {
     GridPane ui = new GridPane();
-    ui.setPrefWidth(200);
+    ui.setPrefWidth(110);
     ui.setPadding(new Insets(10));
     //map.getPlayer().setName()
     nameLabel.setText("" + player.getName());
@@ -100,7 +100,11 @@ public class Main extends Application {
     } catch (Exception ignored) {
     }
     for (Enemy enemy : enemies) {
-      enemy.makeMove(player);
+      try {
+        enemy.makeMove(player);
+      } catch (Exception ignored) {
+      }//todo remove try, unable move out of map
+
     }
     refresh();
   }

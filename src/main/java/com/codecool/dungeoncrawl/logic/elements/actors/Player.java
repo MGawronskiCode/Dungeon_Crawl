@@ -107,7 +107,7 @@ public class Player extends Actor {
   private int reduceEnemyHealthAfterAttack(Enemy attackedEnemy) {
     int enemyHealth = attackedEnemy.health;
     int enemyDefence = attackedEnemy.defence;
-    attackedEnemy.health = (enemyHealth + enemyDefence - this.attack);
+    attackedEnemy.health = (enemyHealth/* + enemyDefence*/ - this.attack);
     return enemyHealth;
   }
 

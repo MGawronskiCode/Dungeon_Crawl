@@ -6,9 +6,9 @@ import lombok.Getter;
 
 import java.util.Random;
 
+@Getter
 public abstract class Actor extends Element {
   protected Random random;
-  @Getter
   protected int health;
   protected int attack;
   protected int defence;
@@ -33,7 +33,7 @@ public abstract class Actor extends Element {
   }
 
   private void reducePlayerHealth(Player player, int playerHealth, int playerDefence) {
-    player.health = health + playerDefence - this.attack;
+    player.health = player.health/* + playerDefence*/ - this.attack;
   }
 
   private boolean playerKilled(Player player) {
