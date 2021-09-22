@@ -1,16 +1,24 @@
 package com.codecool.dungeoncrawl;
 
+import com.codecool.dungeoncrawl.UI.EndGamePopup;
+import com.codecool.dungeoncrawl.UI.NameInputPopup;
+import com.codecool.dungeoncrawl.UI.SaveGameEvent;
+import com.codecool.dungeoncrawl.UI.SaveGamePopup;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.elements.actors.Enemy;
 import com.codecool.dungeoncrawl.logic.elements.actors.Player;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -20,6 +28,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class Main<T> extends Application{
 	@Setter
@@ -30,21 +39,24 @@ public class Main<T> extends Application{
 	Label inventoryLabel = new Label();
 	Label attackLabel = new Label();
 	Label defenceLabel = new Label();
-	private GameMap map = MapLoader.loadMap("/map.txt");
+	private GameMap map = MapLoader.loadMap("/map1.txt");
 	private final Canvas canvas = new Canvas(map.getWidth() * Tiles.TILE_WIDTH, map.getHeight() * Tiles.TILE_WIDTH);
 	private final GraphicsContext context = canvas.getGraphicsContext2D();
 	private int mapNameIncrementer = 1;
-	
+	private Stage stage;
+	private String heroName;
+
 	public static void main(String[] args){
 		launch(args);
 	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
+		this.stage = primaryStage;
 		GridPane ui = new GridPane();
-		ui.setPrefWidth(100);
+		ui.setPrefWidth(150);
 		ui.setPadding(new Insets(10));
-		//map.getPlayer().setName()
+		player.setName(this.heroName);
 		nameLabel.setText("" + player.getName());
 		ui.add(new Label("Name: "), 0, 0);
 		ui.add(new Label("Health: "), 0, 1);
@@ -66,17 +78,20 @@ public class Main<T> extends Application{
 		primaryStage.setScene(scene);
 		refresh();
 		scene.setOnKeyPressed(this::onKeyPressed);
-
+		scene.addEventFilter(KeyEvent.KEY_PRESSED, new SaveGameEvent());
 		primaryStage.setTitle("Dungeon Crawl");
 		primaryStage.show();
+		setHeroName();
+
 	}
 
-	private void onKeyPressed(KeyEvent keyEvent){
+	private void onKeyPressed(KeyEvent keyEvent) {
 		ArrayList<Enemy> enemies = MapLoader.getEnemies();
-		try{
+//		if (heroName == null) {setHeroName();}
+		try {
 			int dx = 0;
 			int dy = 0;
-			switch(keyEvent.getCode()){
+			switch (keyEvent.getCode()) {
 				case UP:
 					dy = -1;
 					makeMove(player, dx, dy, enemies);
@@ -97,15 +112,25 @@ public class Main<T> extends Application{
 					player.pickItem();
 					break;
 			}
-		}catch(Exception ignored){
+		} catch (Exception ignored) {
 		}
-		for(Enemy enemy : enemies){
-			try{
+		for (Enemy enemy : enemies) {
+			try {
 				enemy.makeMove(player);
-			}catch(Exception ignored){
+			} catch (Exception ignored) {
 			}
 		}
-		refresh();
+		if (player.getHealth() <= 0) {
+			EndGamePopup gameOver = new EndGamePopup(this);
+			gameOver.show(stage);
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		} else {
+			refresh();
+		}
 	}
 	
 	//todo move to the Player class
@@ -139,7 +164,7 @@ public class Main<T> extends Application{
 		enemies = MapLoader.getEnemies();
 	}
 
-	private void refresh(){
+	private void refresh()  {
 		context.setFill(Color.BLACK);
 		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(int x = 0;x < map.getWidth();x++){
@@ -163,5 +188,21 @@ public class Main<T> extends Application{
 		attackLabel.setText("" + player.getAttack());
 		defenceLabel.setText("" + player.getDefence());
 
+
 	}
+
+	private void setHeroName() {
+		NameInputPopup heroInputPopup = new NameInputPopup("Hero name");
+		heroInputPopup.showAndWait();
+//		this.heroName = heroInputPopup.getHeroNameEntered();
+		player.setName(heroInputPopup.getHeroNameEntered());
+		nameLabel.setText("" + player.getName());
+//		System.out.println(heroName)
+	}
+
+	public void newGame() throws Exception {
+		start(stage);
+	}
+
+
 }

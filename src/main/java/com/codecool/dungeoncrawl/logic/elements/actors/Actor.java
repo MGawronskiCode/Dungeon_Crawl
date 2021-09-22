@@ -42,7 +42,7 @@ public abstract class Actor extends Element{
 		player.setHealth(playerHealth + playerDefence - this.attack);
 	}
 	
-	private boolean playerKilled(Player player){
+	public boolean playerKilled(Player player){
 		return player.getHealth() <= 0;
 	}
 	
