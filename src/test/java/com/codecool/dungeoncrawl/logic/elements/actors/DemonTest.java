@@ -36,5 +36,4 @@ class DemonTest {
     assertEquals("demon", getTileNameReturn);
   }
 
-
 }
