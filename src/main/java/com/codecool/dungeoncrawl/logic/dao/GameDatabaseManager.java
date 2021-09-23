@@ -1,7 +1,7 @@
-package com.codecool.dungeoncrawl.dao;
+package com.codecool.dungeoncrawl.logic.dao;
 
-import com.codecool.dungeoncrawl.logic.actors.Player;
-import com.codecool.dungeoncrawl.model.PlayerModel;
+import com.codecool.dungeoncrawl.logic.elements.actors.Player;
+import com.codecool.dungeoncrawl.logic.model.PlayerModel;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;

@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.model;
+package com.codecool.dungeoncrawl.logic.model;
 
 import java.lang.reflect.Field;
 

@@ -1,4 +1,4 @@
-package com.codecool.dungeoncrawl.model;
+package com.codecool.dungeoncrawl.logic.model;
 
 import java.util.ArrayList;
 import java.sql.Date;

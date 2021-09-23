@@ -1,6 +1,6 @@
-package com.codecool.dungeoncrawl.dao;
+package com.codecool.dungeoncrawl.logic.dao;
 
-import com.codecool.dungeoncrawl.model.GameState;
+import com.codecool.dungeoncrawl.logic.model.GameState;
 
 import java.util.List;
 
