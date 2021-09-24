@@ -19,7 +19,7 @@ class SpiderTest {
   }
 
   @Test
-  public void whenCreatingNewMag_allFieldsHaveCorrectValues() {
+  public void whenCreatingNewSpider_allFieldsHaveCorrectValues() {
     assertNotNull(spider);
     assertNotNull(spider.getCell());
     assertEquals(30, spider.getHealth());

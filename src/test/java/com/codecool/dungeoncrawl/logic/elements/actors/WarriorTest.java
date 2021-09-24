@@ -19,7 +19,7 @@ class WarriorTest {
   }
 
   @Test
-  public void whenCreatingNewMag_allFieldsHaveCorrectValues() {
+  public void whenCreatingNewWarrior_allFieldsHaveCorrectValues() {
     assertNotNull(warrior);
     assertNotNull(warrior.getCell());
     assertEquals(50, warrior.getHealth());

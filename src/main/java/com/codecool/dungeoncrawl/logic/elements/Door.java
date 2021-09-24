@@ -3,7 +3,6 @@ package com.codecool.dungeoncrawl.logic.elements;
 import com.codecool.dungeoncrawl.logic.Cell;
 
 public class Door extends Element {
-
   private boolean isOpen;
 
   public Door(Cell cell) {

@@ -19,7 +19,7 @@ class SkeletonTest {
   }
 
   @Test
-  public void whenCreatingNewMag_allFieldsHaveCorrectValues() {
+  public void whenCreatingNewSkeleton_allFieldsHaveCorrectValues() {
     assertNotNull(skeleton);
     assertNotNull(skeleton.getCell());
     assertEquals(30, skeleton.getHealth());

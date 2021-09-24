@@ -19,7 +19,7 @@ class TrollTest {
   }
 
   @Test
-  public void whenCreatingNewMag_allFieldsHaveCorrectValues() {
+  public void whenCreatingNewTroll_allFieldsHaveCorrectValues() {
     assertNotNull(troll);
     assertNotNull(troll.getCell());
     assertEquals(200, troll.getHealth());
