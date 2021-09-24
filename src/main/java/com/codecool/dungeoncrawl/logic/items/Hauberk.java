@@ -1,11 +1,12 @@
 package com.codecool.dungeoncrawl.logic.items;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import lombok.Getter;
 
 import java.util.Random;
 
 public class Hauberk extends Item {
-
+  @Getter
   public int defence;
 
   public Hauberk(Cell cell) {
@@ -14,16 +15,12 @@ public class Hauberk extends Item {
   }
 
   @Override
-  public String getTileName() {
-    return "hauberk";
+  public String toString() {
+    return this.getName() + " +" + defence;
   }
 
   @Override
-  public String toString() {
-    return "Hauberk +" + defence;
-  }
-
-  public int getDefence() {
-    return defence;
+  public String getTileName() {
+    return null;
   }
 }
