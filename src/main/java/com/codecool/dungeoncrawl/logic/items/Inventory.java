@@ -1,14 +1,12 @@
 package com.codecool.dungeoncrawl.logic.items;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 
+@Getter
 public class Inventory {
-
   private final ArrayList<Item> items = new ArrayList<>();
-
-  public ArrayList<Item> getItems() {
-    return items;
-  }
 
   public void addItem(Item item) {
     items.add(item);
