@@ -42,7 +42,7 @@ public class Main<T> extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception{
 		GridPane ui = new GridPane();
-		ui.setPrefWidth(100);
+		ui.setPrefWidth(120);
 		ui.setPadding(new Insets(10));
 		//map.getPlayer().setName()
 		nameLabel.setText("" + player.getName());
