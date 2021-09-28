@@ -2,7 +2,7 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,10 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class EchinopsTest {
 
-  private static Echinops echinops;
+  private Echinops echinops;
 
-  @BeforeAll
-  public static void setEchinops() {
+  @BeforeEach
+  public void setEchinops() {
     echinops = new Echinops(new Cell(null, 0, 0, CellType.EMPTY));
   }
 

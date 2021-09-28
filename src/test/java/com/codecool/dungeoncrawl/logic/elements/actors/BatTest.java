@@ -59,5 +59,4 @@ class BatTest {
 //    then
     assertFalse(playerNear);
   }
-
 }

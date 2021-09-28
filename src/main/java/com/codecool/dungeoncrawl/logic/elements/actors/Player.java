@@ -10,7 +10,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class Player extends Actor {
+public class Player extends Actor {//todo tests
 
   @Getter
   private final Inventory inventory = new Inventory();
@@ -27,6 +27,20 @@ public class Player extends Actor {
     this.attack = 20;
     this.defence = 0;
     this.map = map;
+  }
+
+  private void revealNearbyCells() {
+    for (int dx = -5; dx < 6; dx++) {//check cells in range 3
+      for (int dy = -5; dy < 6; dy++) {
+        try {
+          Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
+          if (!nearbyToPlayer.isVisible()) {
+            nearbyToPlayer.setVisible(true);
+          }
+        } catch (Exception ignored) {
+        }
+      }
+    }
   }
 
   public Player(Cell cell, int health) {
@@ -118,20 +132,6 @@ public class Player extends Actor {
   private void removeAttackedEnemy(ArrayList<Enemy> enemies, Cell nextCell, Enemy attackedEnemy) {
     enemies.removeIf(enemy -> enemy.equals(attackedEnemy));
     nextCell.setActor(null);
-  }
-
-  private void revealNearbyCells() {
-    for (int dx = -5; dx < 6; dx++) {//check cells in range 3
-      for (int dy = -5; dy < 6; dy++) {
-        try {
-          Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
-          if (!nearbyToPlayer.isVisible()) {
-            nearbyToPlayer.setVisible(true);
-          }
-        } catch (Exception ignored) {
-        }
-      }
-    }
   }
 
   public void pickItem() {

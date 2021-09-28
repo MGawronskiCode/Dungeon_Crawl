@@ -18,6 +18,11 @@ public class Ghost extends Enemy {
   }
 
   @Override
+  protected boolean isValidMove(Cell nextCell, CellType nextCellType) {
+    return nextCell.getActor() == null;
+  }
+
+  @Override
   protected boolean isValidMove(boolean validMove, Cell nextCell, CellType nextCellType) {
     if ((nextCellType == CellType.EMPTY || nextCellType == CellType.FLOOR || nextCellType == CellType.WALL) && nextCell.getActor() == null) {
       validMove = true;
@@ -26,10 +31,5 @@ public class Ghost extends Enemy {
       cell = nextCell;
     }
     return validMove;
-  }
-
-  @Override
-  protected boolean isValidMove(Cell nextCell, CellType nextCellType) {
-    return nextCell.getActor() == null;
   }
 }
