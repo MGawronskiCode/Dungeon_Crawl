@@ -29,9 +29,20 @@ public class Player extends Actor {//todo tests
     this.map = map;
   }
 
+  public Player(Cell cell, int health) {
+    super(cell);
+    revealNearbyCells();
+    this.health = health;
+    this.attack = 20;
+    this.defence = 0;
+  }
+
   private void revealNearbyCells() {
-    for (int dx = -5; dx < 6; dx++) {//check cells in range 3
-      for (int dy = -5; dy < 6; dy++) {
+    int rangeMinimum = -5;//check cells in range 3
+    int rangeMaximum = 6;
+
+    for (int dx = rangeMinimum; dx < rangeMaximum; dx++) {
+      for (int dy = rangeMinimum; dy < rangeMaximum; dy++) {
         try {
           Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
           if (!nearbyToPlayer.isVisible()) {
@@ -43,20 +54,12 @@ public class Player extends Actor {//todo tests
     }
   }
 
-  public Player(Cell cell, int health) {
-    super(cell);
-    revealNearbyCells();
-    this.health = health;
-    this.attack = 20;
-    this.defence = 0;
-  }
-
   public int getAttack() {
     return attack + inventory.getAttack();
   }
 
   public int getDefence() {
-    return attack + inventory.getDefence();
+    return defence + inventory.getDefence();
   }
 
   public String getTileName() {
