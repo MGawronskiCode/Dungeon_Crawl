@@ -20,7 +20,7 @@ public class Sword extends Item {
 
   @Override
   public String toString() {
-    return "Sword + " + attack;
+    return this.getType().toString() + " +" + attack;
   }
 
   public int getAttack() {

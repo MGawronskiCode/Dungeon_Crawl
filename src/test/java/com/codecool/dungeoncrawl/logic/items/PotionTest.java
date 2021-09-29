@@ -31,6 +31,6 @@ class PotionTest {
 
   @Test
   public void keyToStringReturnsCorrectValue() {
-    assertEquals("Potion", potion.toString());
+    assertEquals("POTION", potion.toString());
   }
 }

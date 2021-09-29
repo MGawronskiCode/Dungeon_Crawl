@@ -16,6 +16,6 @@ public class Potion extends Item {
 
   @Override
   public String toString() {
-    return "Potion";
+    return this.getType().toString();
   }
 }

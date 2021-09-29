@@ -31,6 +31,6 @@ class KeyTest {
 
   @Test
   public void keyToStringReturnsCorrectValue() {
-    assertEquals("Key", key.toString());
+    assertEquals("KEY", key.toString());
   }
 }
