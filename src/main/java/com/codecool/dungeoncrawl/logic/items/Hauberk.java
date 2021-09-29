@@ -10,13 +10,13 @@ public class Hauberk extends Item {
   public int defence;
 
   public Hauberk(Cell cell) {
-    super(cell, "hauberk");
+    super(cell, ItemType.HAUBERK);
     this.defence = new Random().nextInt(5) + 5;
   }
 
   @Override
   public String toString() {
-    return this.getName() + " +" + defence;
+    return this.getType() + " +" + defence;
   }
 
   @Override

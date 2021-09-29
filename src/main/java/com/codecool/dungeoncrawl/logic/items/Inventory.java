@@ -44,4 +44,12 @@ public class Inventory {
     }
     return result;
   }
+
+  public boolean hasKey() {
+    for (Item item : items) {
+      if (item.getType() == ItemType.KEY)
+        return true;
+    }
+    return false;
+  }
 }
