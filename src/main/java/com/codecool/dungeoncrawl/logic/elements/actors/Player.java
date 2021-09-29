@@ -5,6 +5,7 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Inventory;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.ItemType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -86,7 +87,7 @@ public class Player extends Actor {//todo tests
         return nextCell.getActor() == null;
       } else {
         for (Item item : inventory.getItems()) {
-          if (item.getTileName().equals("key")) {//todo inventory method hasKey
+          if (item.getType() == ItemType.KEY) {
             inventory.removeItem(item);
             nextCell.getDoor().open();
             return true;
@@ -107,10 +108,6 @@ public class Player extends Actor {//todo tests
   public boolean isStairs(int dx, int dy) {
     Cell nextCell = cell.getNeighbor(dx, dy);
     return nextCell.getType() == CellType.STAIRS;
-  }
-
-  public boolean hasKey() {
-    return inventory.getItems().contains("key");
   }
 
   public void attack(int dx, int dy, ArrayList<Enemy> enemies) {

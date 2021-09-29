@@ -88,4 +88,11 @@ class InventoryTest {
     int attackAfterAddingHauberk = inventory.getDefence();
     assertTrue(attackAfterAddingHauberk > 0 && attackAfterAddingHauberk <= 10);
   }
+
+  @Test
+  public void hasKeyReturnsCorrectValue_dependingOnInventory() {
+    assertFalse(inventory.hasKey());
+    inventory.addItem(new Key(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY)));
+    assertTrue(inventory.hasKey());
+  }
 }

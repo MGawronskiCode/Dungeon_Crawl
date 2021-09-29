@@ -4,7 +4,6 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Hauberk;
-import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -116,16 +115,5 @@ class PlayerTest {
     assertTrue(player.isStairs(1, 0));
   }
 
-  @Test
-  public void whenPlayerHasNoKeyInInventory_hasKeyReturnsFalse() {
-    assertFalse(player.hasKey());
-  }
-
-  @Test
-  public void whenPlayerHasAKeyInInventory_hasKeyReturnsTrue() {
-    player.getInventory().addItem(new Key(new Cell(new GameMap(10, 10, CellType.EMPTY),
-        0, 0, CellType.EMPTY)));
-    assertTrue(player.hasKey());
-  }
   //todo attack test
 }
