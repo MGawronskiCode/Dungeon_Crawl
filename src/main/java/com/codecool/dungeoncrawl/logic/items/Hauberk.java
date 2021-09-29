@@ -21,6 +21,6 @@ public class Hauberk extends Item {
 
   @Override
   public String getTileName() {
-    return null;
+    return "hauberk";
   }
 }
