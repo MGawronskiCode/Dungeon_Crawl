@@ -28,6 +28,6 @@ class SwordTest {
 
   @Test
   public void swordToStringWorksCorrectly() {
-    assertEquals("Sword + " + sword.getAttack(), sword.toString());
+    assertEquals("SWORD +" + sword.getAttack(), sword.toString());
   }
 }

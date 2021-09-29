@@ -28,6 +28,6 @@ class HauberkTest {
 
   @Test
   public void hauberkToStringWorksCorrectly() {
-    assertEquals("hauberk +" + hauberk.getDefence(), hauberk.toString());
+    assertEquals("HAUBERK +" + hauberk.getDefence(), hauberk.toString());
   }
 }

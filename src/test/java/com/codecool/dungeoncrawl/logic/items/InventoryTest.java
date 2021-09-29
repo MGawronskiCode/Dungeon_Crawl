@@ -66,9 +66,9 @@ class InventoryTest {
     assertEquals("", inventory.toString());
     Hauberk hauberk = new Hauberk(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY));
     inventory.addItem(hauberk);
-    assertEquals("hauberk +" + hauberk.getDefence() + "\n", inventory.toString());
+    assertEquals("HAUBERK +" + hauberk.getDefence() + "\n", inventory.toString());
     inventory.addItem(hauberk);
-    assertEquals("hauberk +" + hauberk.getDefence() + "\nhauberk +" + hauberk.getDefence() + "\n", inventory.toString());
+    assertEquals("HAUBERK +" + hauberk.getDefence() + "\nHAUBERK +" + hauberk.getDefence() + "\n", inventory.toString());
   }
 
   @Test
