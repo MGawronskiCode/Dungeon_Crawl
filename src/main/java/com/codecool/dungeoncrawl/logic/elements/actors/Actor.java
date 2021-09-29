@@ -36,7 +36,7 @@ public abstract class Actor extends Element {
     player.health = player.health/* + playerDefence*/ - this.attack;
   }
 
-  private boolean playerKilled(Player player) {
+  public boolean playerKilled(Player player) {
     return player.health <= 0;
   }
 

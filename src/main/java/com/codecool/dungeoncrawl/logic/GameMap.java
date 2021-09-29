@@ -12,8 +12,9 @@ public class GameMap {
   private final int height;
   private final Cell[][] cells;
   private ArrayList<Enemy> enemies;
+  protected String currentMap;
 
-  public GameMap(int width, int height, CellType defaultCellType) {
+	public GameMap(int width, int height, CellType defaultCellType) {
     this.width = width;
     this.height = height;
     cells = new Cell[width][height];
@@ -24,8 +25,15 @@ public class GameMap {
     }
   }
 
+	public void setCurrentMap(String currentMap) {
+		this.currentMap = currentMap;
+	}
+
+	public String getCurrentMap() {
+		return currentMap;
+	}
+
   public Cell getCell(int x, int y) {
     return cells[x][y];
   }
-
 }
