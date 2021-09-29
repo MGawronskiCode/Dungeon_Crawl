@@ -8,7 +8,16 @@ public class GameMap{
 	private final int width;
 	private final int height;
 	private final Cell[][] cells;
-	
+	protected String currentMap;
+
+	public void setCurrentMap(String currentMap) {
+		this.currentMap = currentMap;
+	}
+
+	public String getCurrentMap() {
+		return currentMap;
+	}
+
 	public GameMap(int width, int height, CellType defaultCellType){
 		this.width = width;
 		this.height = height;

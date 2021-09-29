@@ -125,6 +125,8 @@ public class MapLoader{
 				}
 			}
 		}
+		map.setCurrentMap(mapName);
+
 		return map;
 	}
 }

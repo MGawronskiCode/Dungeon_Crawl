@@ -1,24 +1,19 @@
 package com.codecool.dungeoncrawl;
 
 import com.codecool.dungeoncrawl.UI.EndGamePopup;
-import com.codecool.dungeoncrawl.UI.NameInputPopup;
+import com.codecool.dungeoncrawl.UI.HeroNameInputPopup;
 import com.codecool.dungeoncrawl.UI.SaveGameEvent;
-import com.codecool.dungeoncrawl.UI.SaveGamePopup;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.elements.actors.Enemy;
 import com.codecool.dungeoncrawl.logic.elements.actors.Player;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -78,7 +73,7 @@ public class Main<T> extends Application{
 		primaryStage.setScene(scene);
 		refresh();
 		scene.setOnKeyPressed(this::onKeyPressed);
-		scene.addEventFilter(KeyEvent.KEY_PRESSED, new SaveGameEvent());
+		scene.addEventFilter(KeyEvent.KEY_PRESSED, new SaveGameEvent(map, player));
 		primaryStage.setTitle("Dungeon Crawl");
 		primaryStage.show();
 		setHeroName();
@@ -192,12 +187,10 @@ public class Main<T> extends Application{
 	}
 
 	private void setHeroName() {
-		NameInputPopup heroInputPopup = new NameInputPopup("Hero name");
+		HeroNameInputPopup heroInputPopup = new HeroNameInputPopup("Hero name");
 		heroInputPopup.showAndWait();
-//		this.heroName = heroInputPopup.getHeroNameEntered();
-		player.setName(heroInputPopup.getHeroNameEntered());
-		nameLabel.setText("" + player.getName());
-//		System.out.println(heroName)
+//		player.setName(heroInputPopup.getHeroNameEntered());
+		nameLabel.setText(heroInputPopup.getHeroNameEntered());
 	}
 
 	public void newGame() throws Exception {
