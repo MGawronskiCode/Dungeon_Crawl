@@ -18,6 +18,7 @@ public class Player extends Actor {//todo tests
   @Setter
   private String name;
   @Getter
+  @Setter
   private GameMap map;
 
   public Player(Cell cell, GameMap map) {

@@ -7,13 +7,11 @@ import lombok.Getter;
 @Getter
 public abstract class Item implements Drawable {
   private final Cell cell;
-  private final String name;
+  private final ItemType type;
 
-  public Item(Cell cell, String name) {
+  public Item(Cell cell, ItemType type) {
     this.cell = cell;
     this.cell.setItem(this);
-    this.name = name;
+    this.type = type;
   }
-//todo itemType enum
-
 }

@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Hauberk;
+import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +44,8 @@ class PlayerTest {
     assertEquals(100, player.getHealth());
   }
 
+  //todo revealNearbyCells test
+
   @Test
   public void getAttackReturnsCorrectValuesDependsOnInventory() {
     assertEquals(0, player.getInventory().getItems().size());
@@ -68,5 +71,61 @@ class PlayerTest {
     assertEquals("player", player.getTileName());
   }
 
-//  todo rest of tests
+  @Test
+  public void whenPlayerMoveIntoValidCell_ItsLocalisationChangesCorrectly() {
+//    when
+    player.move(1, 0);
+//    then
+    assertEquals(1, player.getX());
+    assertEquals(0, player.getY());
+  }
+
+  @Test
+  public void whenPlayerTriesToMoveOutOfMap_ItsLocalisationDoesntChange() {
+    //    when
+    player.move(-1, 0);
+//    then
+    assertEquals(0, player.getX());
+    assertEquals(0, player.getY());
+  }
+
+  //todo isMovementOk test
+
+  @Test
+  public void whenPlayerMoves_isEnemyReturnsCorrectValue_dependingOnNextCellOfMap() {
+//    when
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(new Cell(gameMap, 0, 0, CellType.EMPTY), gameMap);
+    Bat bat = new Bat(new Cell(gameMap, 1, 0, CellType.EMPTY));
+    gameMap.getCell(0, 0).setActor(player);
+    gameMap.getCell(1, 0).setActor(bat);
+//    then
+    assertFalse(player.isEnemy(0, 1));
+    assertTrue(player.isEnemy(1, 0));
+  }
+
+  @Test
+  public void whenPlayerMoves_isStairsReturnsCorrectValue_dependingOnNextCellOfMap() {
+//    when
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(new Cell(gameMap, 0, 0, CellType.EMPTY), gameMap);
+    gameMap.getCell(0, 0).setActor(player);
+    gameMap.getCell(1, 0).setType(CellType.STAIRS);
+//    then
+    assertFalse(player.isStairs(0, 1));
+    assertTrue(player.isStairs(1, 0));
+  }
+
+  @Test
+  public void whenPlayerHasNoKeyInInventory_hasKeyReturnsFalse() {
+    assertFalse(player.hasKey());
+  }
+
+  @Test
+  public void whenPlayerHasAKeyInInventory_hasKeyReturnsTrue() {
+    player.getInventory().addItem(new Key(new Cell(new GameMap(10, 10, CellType.EMPTY),
+        0, 0, CellType.EMPTY)));
+    assertTrue(player.hasKey());
+  }
+  //todo attack test
 }

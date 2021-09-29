@@ -15,7 +15,7 @@ class ItemTest {
 
   @BeforeEach
   private void setItem() {
-    item = new Item(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY), "item") {
+    item = new Item(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY), ItemType.HAUBERK) {
       @Override
       public String getTileName() {
         return null;
@@ -27,7 +27,7 @@ class ItemTest {
   public void whenNewItemCreated_allItsFieldsHaveCorrectValues() {
     assertNotNull(item);
     assertNotNull(item.getCell());
-    assertEquals("item", item.getName());
     assertEquals(item, item.getCell().getItem());
+    assertEquals(ItemType.HAUBERK, item.getType());
   }
 }
