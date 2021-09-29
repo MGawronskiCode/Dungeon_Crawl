@@ -30,10 +30,10 @@ class InventoryTest {
 
   @Test
   public void whenItemInInventoryAndLaunchedRemoveItem_itemIsCorrectlyRemoved() {
+//    when
     if (inventory.getItems().size() == 0)
       inventory.addItem(new Hauberk(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY)));
     inventory.removeItem(inventory.getItems().get(0));
-
 //    then
     assertNotNull(inventory.getItems());
     try {
@@ -44,15 +44,19 @@ class InventoryTest {
 
   @Test
   public void whenRemoveItemLaunchedWithNullArgument_theresNoErrorAndNoElementRemoved() {
+//    when
     int inventorySizeBeforeDeleting = inventory.getItems().size();
     inventory.removeItem(null);
+//    then
     assertEquals(inventorySizeBeforeDeleting, inventory.getItems().size());
   }
 
   @Test
   public void whenRemoveItemLaunchedWithObjectNotInInventory_theresNoErrorAndNoElementRemoved() {
+//    when
     int inventorySizeBeforeDeleting = inventory.getItems().size();
     inventory.removeItem(new Hauberk(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY)));
+//    then
     assertEquals(inventorySizeBeforeDeleting, inventory.getItems().size());
   }
 
@@ -83,5 +87,12 @@ class InventoryTest {
     inventory.addItem(new Hauberk(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY)));
     int attackAfterAddingHauberk = inventory.getDefence();
     assertTrue(attackAfterAddingHauberk > 0 && attackAfterAddingHauberk <= 10);
+  }
+
+  @Test
+  public void hasKeyReturnsCorrectValue_dependingOnInventory() {
+    assertFalse(inventory.hasKey());
+    inventory.addItem(new Key(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY)));
+    assertTrue(inventory.hasKey());
   }
 }

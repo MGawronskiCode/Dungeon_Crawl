@@ -9,7 +9,7 @@ public class Sword extends Item {
   public int attack;
 
   public Sword(Cell cell) {
-    super(cell, "sword");
+    super(cell, ItemType.SWORD);
     this.attack = new Random().nextInt(5) + 5;
   }
 

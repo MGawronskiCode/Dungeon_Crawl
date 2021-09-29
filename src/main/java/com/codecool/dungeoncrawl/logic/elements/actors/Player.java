@@ -5,12 +5,13 @@ import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Inventory;
 import com.codecool.dungeoncrawl.logic.items.Item;
+import com.codecool.dungeoncrawl.logic.items.ItemType;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class Player extends Actor {
+public class Player extends Actor {//todo tests
 
   @Getter
   private final Inventory inventory = new Inventory();
@@ -18,6 +19,7 @@ public class Player extends Actor {
   @Setter
   private String name;
   @Getter
+  @Setter
   private GameMap map;
 
   public Player(Cell cell, GameMap map) {
@@ -37,12 +39,29 @@ public class Player extends Actor {
     this.defence = 0;
   }
 
+  private void revealNearbyCells() {
+    int rangeMinimum = -5;//check cells in range 3
+    int rangeMaximum = 6;
+
+    for (int dx = rangeMinimum; dx < rangeMaximum; dx++) {
+      for (int dy = rangeMinimum; dy < rangeMaximum; dy++) {
+        try {
+          Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
+          if (!nearbyToPlayer.isVisible()) {
+            nearbyToPlayer.setVisible(true);
+          }
+        } catch (Exception ignored) {
+        }
+      }
+    }
+  }
+
   public int getAttack() {
     return attack + inventory.getAttack();
   }
 
   public int getDefence() {
-    return attack + inventory.getDefence();
+    return defence + inventory.getDefence();
   }
 
   public String getTileName() {
@@ -68,7 +87,7 @@ public class Player extends Actor {
         return nextCell.getActor() == null;
       } else {
         for (Item item : inventory.getItems()) {
-          if (item.getTileName().equals("key")) {//todo inventory method hasKey
+          if (item.getType() == ItemType.KEY) {
             inventory.removeItem(item);
             nextCell.getDoor().open();
             return true;
@@ -89,10 +108,6 @@ public class Player extends Actor {
   public boolean isStairs(int dx, int dy) {
     Cell nextCell = cell.getNeighbor(dx, dy);
     return nextCell.getType() == CellType.STAIRS;
-  }
-
-  public boolean hasKey() {
-    return inventory.getItems().contains("key");
   }
 
   public void attack(int dx, int dy, ArrayList<Enemy> enemies) {
@@ -118,20 +133,6 @@ public class Player extends Actor {
   private void removeAttackedEnemy(ArrayList<Enemy> enemies, Cell nextCell, Enemy attackedEnemy) {
     enemies.removeIf(enemy -> enemy.equals(attackedEnemy));
     nextCell.setActor(null);
-  }
-
-  private void revealNearbyCells() {
-    for (int dx = -5; dx < 6; dx++) {//check cells in range 3
-      for (int dy = -5; dy < 6; dy++) {
-        try {
-          Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
-          if (!nearbyToPlayer.isVisible()) {
-            nearbyToPlayer.setVisible(true);
-          }
-        } catch (Exception ignored) {
-        }
-      }
-    }
   }
 
   public void pickItem() {
