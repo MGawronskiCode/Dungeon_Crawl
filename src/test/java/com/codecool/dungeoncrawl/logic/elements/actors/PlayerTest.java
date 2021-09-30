@@ -3,7 +3,9 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
+import com.codecool.dungeoncrawl.logic.elements.Door;
 import com.codecool.dungeoncrawl.logic.items.Hauberk;
+import com.codecool.dungeoncrawl.logic.items.Key;
 import com.codecool.dungeoncrawl.logic.items.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,10 +88,63 @@ class PlayerTest {
     assertEquals(0, player.getY());
   }
 
-  //todo isMovementOk test
   @Test
-  public void t() {
+  public void whenTheNextMoveIntoEmptySpace_isMovementOkReturnsTrue() {
+//    given
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(gameMap.getCell(0, 0), gameMap);
+//    when
+    Cell nextCell = new Cell(gameMap, 1, 0, CellType.EMPTY);
+//then
+    assertTrue(player.isMovementOk(nextCell));
+  }
 
+  @Test
+  public void whenTheNextMoveIntoEnemy_isMovementOkReturnsFalse() {
+//    given
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(gameMap.getCell(0, 0), gameMap);
+//    when
+    Cell nextCell = new Cell(gameMap, 1, 0, CellType.EMPTY);
+    Enemy enemy = new Bat(nextCell);
+//then
+    assertFalse(player.isMovementOk(nextCell));
+  }
+
+  @Test
+  public void whenTheNextMoveIntoWall_isMovementOkReturnsFalse() {
+//    given
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(gameMap.getCell(0, 0), gameMap);
+//    when
+    Cell nextCell = new Cell(gameMap, 1, 0, CellType.WALL);
+//then
+    assertFalse(player.isMovementOk(nextCell));
+  }
+
+  @Test
+  public void whenTheNextMoveIntoDoorsWithoutKey_isMovementOkReturnsFalse() {
+//    given
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(gameMap.getCell(0, 0), gameMap);
+//    when
+    Cell nextCell = new Cell(gameMap, 1, 0, CellType.EMPTY);
+    Door door = new Door(nextCell);
+//then
+    assertFalse(player.isMovementOk(nextCell));
+  }
+
+  @Test
+  public void whenTheNextMoveIntoDoorsWithKey_isMovementOkReturnsTrue() {
+//    given
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(gameMap.getCell(0, 0), gameMap);
+//    when
+    Cell nextCell = new Cell(gameMap, 1, 0, CellType.EMPTY);
+    Door door = new Door(nextCell);
+    player.getInventory().addItem(new Key(new Cell(gameMap, 2, 2, CellType.EMPTY)));
+//then
+    assertTrue(player.isMovementOk(nextCell));
   }
 
   @Test

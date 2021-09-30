@@ -31,23 +31,6 @@ public class Player extends Actor {//todo tests
     this.map = map;
   }
 
-  private void revealNearbyCells() {
-    int rangeMinimum = -5;//check cells in range 3
-    int rangeMaximum = 6;
-
-    for (int dx = rangeMinimum; dx < rangeMaximum; dx++) {
-      for (int dy = rangeMinimum; dy < rangeMaximum; dy++) {
-        try {
-          Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
-          if (!nearbyToPlayer.isVisible()) {
-            nearbyToPlayer.setVisible(true);
-          }
-        } catch (Exception ignored) {
-        }
-      }
-    }
-  }
-
   public Player(Cell cell, int health) {
     super(cell);
     revealNearbyCells();
@@ -89,6 +72,23 @@ public class Player extends Actor {//todo tests
       if (nextCellIsOpenedDoors(nextCell))
         return true;
       else return hasKey(nextCell);
+    }
+  }
+
+  private void revealNearbyCells() {
+    int rangeMinimum = -5;//check cells in range 3
+    int rangeMaximum = 6;
+
+    for (int dx = rangeMinimum; dx < rangeMaximum; dx++) {
+      for (int dy = rangeMinimum; dy < rangeMaximum; dy++) {
+        try {
+          Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
+          if (!nearbyToPlayer.isVisible()) {
+            nearbyToPlayer.setVisible(true);
+          }
+        } catch (Exception ignored) {
+        }
+      }
     }
   }
 
