@@ -10,6 +10,8 @@ import com.codecool.dungeoncrawl.logic.items.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
@@ -173,4 +175,38 @@ class PlayerTest {
   }
 
   //todo attack test
+  @Test
+  public void whenPlayerAttackEnemyAndDoesntKillHim_EnemyHealthIsReducedByPlayerAttack() {
+//    given
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(new Cell(gameMap, 0, 0, CellType.EMPTY), gameMap);
+    Enemy enemy = new Skeleton(new Cell(gameMap, 1, 0, CellType.EMPTY));
+    gameMap.getCell(0, 0).setActor(player);
+    gameMap.getCell(1, 0).setActor(enemy);
+    ArrayList<Enemy> enemies = new ArrayList<>();
+    enemies.add(enemy);
+//    when
+    player.attack(1, 0, enemies);
+//    then
+    assertEquals(10, enemy.getHealth());
+  }
+
+  @Test
+  public void whenPlayerAttackEnemyAndKillHim_EnemyIsRemovedFromMapAndEnemiesList() {
+//    given
+    GameMap gameMap = new GameMap(10, 10, CellType.EMPTY);
+    player = new Player(new Cell(gameMap, 0, 0, CellType.EMPTY), gameMap);
+    Enemy enemy = new Skeleton(new Cell(gameMap, 1, 0, CellType.EMPTY));
+    gameMap.getCell(0, 0).setActor(player);
+    gameMap.getCell(1, 0).setActor(enemy);
+    ArrayList<Enemy> enemies = new ArrayList<>();
+    enemies.add(enemy);
+//    when
+    player.attack(1, 0, enemies);
+    player.attack(1, 0, enemies);
+    player.attack(1, 0, enemies);
+//    then
+    assertEquals(0, enemies.size());
+    assertNull(gameMap.getCell(1, 0).getActor());
+  }
 }

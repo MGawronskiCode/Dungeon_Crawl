@@ -11,7 +11,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class Player extends Actor {//todo tests
+public class Player extends Actor {
 
   @Getter
   private final Inventory inventory = new Inventory();
