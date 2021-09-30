@@ -31,14 +31,6 @@ public class Player extends Actor {//todo tests
     this.map = map;
   }
 
-  public Player(Cell cell, int health) {
-    super(cell);
-    revealNearbyCells();
-    this.health = health;
-    this.attack = 20;
-    this.defence = 0;
-  }
-
   private void revealNearbyCells() {
     int rangeMinimum = -5;//check cells in range 3
     int rangeMaximum = 6;
@@ -54,6 +46,14 @@ public class Player extends Actor {//todo tests
         }
       }
     }
+  }
+
+  public Player(Cell cell, int health) {
+    super(cell);
+    revealNearbyCells();
+    this.health = health;
+    this.attack = 20;
+    this.defence = 0;
   }
 
   public int getAttack() {
@@ -81,23 +81,47 @@ public class Player extends Actor {//todo tests
     }
   }
 
-  public boolean isMovementOk(Cell nextCell) {//powydzielać do funkcji
-    if (nextCell.getDoor() != null) {
-      if (nextCell.getDoor().isOpen()) {
-        return nextCell.getActor() == null;
-      } else {
-        for (Item item : inventory.getItems()) {
-          if (item.getType() == ItemType.KEY) {
-            inventory.removeItem(item);
-            nextCell.getDoor().open();
-            return true;
-          }
-        }
-        return false;
+  public boolean isMovementOk(Cell nextCell) {
+    if (nextCellWallOrEnemy(nextCell)) return false;
+    else if (nextCellNotDoors(nextCell))
+      return true;
+    else {
+      if (nextCellIsOpenedDoors(nextCell))
+        return true;
+      else return hasKey(nextCell);
+    }
+  }
+
+  private boolean nextCellWallOrEnemy(Cell nextCell) {
+    String tileInCell = nextCell.getTileName();
+    return tileInCell.equals("wall") || nextCell.getActor() != null;
+  }
+
+  private boolean nextCellNotDoors(Cell nextCell) {
+    return nextCell.getDoor() == null;
+  }
+
+  private boolean nextCellIsOpenedDoors(Cell nextCell) {
+    return nextCell.getDoor().isOpen();
+  }
+
+  private boolean hasKey(Cell nextCell) {
+    for (Item item : inventory.getItems()) {
+      if (openDoorsPossible(item)) {
+        openDoors(nextCell, item);
+        return true;
       }
     }
-    String tileInCell = nextCell.getTileName();
-    return !(tileInCell.equals("wall") || nextCell.getActor() != null);
+    return false;
+  }
+
+  private boolean openDoorsPossible(Item item) {
+    return item.getType() == ItemType.KEY;
+  }
+
+  private void openDoors(Cell nextCell, Item item) {
+    inventory.removeItem(item);
+    nextCell.getDoor().open();
   }
 
   public boolean isEnemy(int dx, int dy) {
@@ -108,6 +132,13 @@ public class Player extends Actor {//todo tests
   public boolean isStairs(int dx, int dy) {
     Cell nextCell = cell.getNeighbor(dx, dy);
     return nextCell.getType() == CellType.STAIRS;
+  }
+
+  public void pickItem() {
+    if (cell.getItem() != null) {
+      inventory.addItem(cell.getItem());
+      cell.removeItem();
+    }
   }
 
   public void attack(int dx, int dy, ArrayList<Enemy> enemies) {
@@ -121,7 +152,7 @@ public class Player extends Actor {//todo tests
 
   private int reduceEnemyHealthAfterAttack(Enemy attackedEnemy) {
     int enemyHealth = attackedEnemy.health;
-    int enemyDefence = attackedEnemy.defence;
+//    int enemyDefence = attackedEnemy.defence;
     attackedEnemy.health = (enemyHealth/* + enemyDefence*/ - this.attack);
     return enemyHealth;
   }
@@ -133,12 +164,5 @@ public class Player extends Actor {//todo tests
   private void removeAttackedEnemy(ArrayList<Enemy> enemies, Cell nextCell, Enemy attackedEnemy) {
     enemies.removeIf(enemy -> enemy.equals(attackedEnemy));
     nextCell.setActor(null);
-  }
-
-  public void pickItem() {
-    if (cell.getItem() != null) {
-      inventory.addItem(cell.getItem());
-      cell.removeItem();
-    }
   }
 }

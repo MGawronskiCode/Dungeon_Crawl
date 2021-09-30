@@ -43,8 +43,6 @@ class PlayerTest {
     assertEquals(100, player.getHealth());
   }
 
-  //todo revealNearbyCells test
-
   @Test
   public void getAttackReturnsCorrectValuesDependsOnInventory() {
     assertEquals(0, player.getInventory().getItems().size());
@@ -89,6 +87,10 @@ class PlayerTest {
   }
 
   //todo isMovementOk test
+  @Test
+  public void t() {
+
+  }
 
   @Test
   public void whenPlayerMoves_isEnemyReturnsCorrectValue_dependingOnNextCellOfMap() {
