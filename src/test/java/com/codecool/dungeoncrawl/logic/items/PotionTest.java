@@ -22,6 +22,7 @@ class PotionTest {
   public void test() {
     assertNotNull(potion);
     assertNotNull(potion.getCell());
+    assertEquals(30, potion.getHealthAddingValue());
   }
 
   @Test

@@ -38,13 +38,13 @@ class PlayerTest {
   @Test
   public void whenCreatingNewPlayerWithSecondConstructor_allItsFieldsHaveCorrectValues() {
 //    when
-    player = new Player(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY), 100);
+    player = new Player(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY), 100, "name");
 //    then
     assertNotNull(player);
     assertNotNull(player.getInventory());
-    assertNull(player.getName());
     assertNull(player.getMap());
     assertEquals(100, player.getHealth());
+    assertEquals("name", player.getName());
   }
 
   @Test
@@ -174,7 +174,6 @@ class PlayerTest {
     assertTrue(player.isStairs(1, 0));
   }
 
-  //todo attack test
   @Test
   public void whenPlayerAttackEnemyAndDoesntKillHim_EnemyHealthIsReducedByPlayerAttack() {
 //    given

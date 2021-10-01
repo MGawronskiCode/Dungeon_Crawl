@@ -6,6 +6,7 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Inventory;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
+import com.codecool.dungeoncrawl.logic.items.Potion;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +16,7 @@ public class Player extends Actor {
 
   @Getter
   private final Inventory inventory = new Inventory();
+  private final ArrayList<String> developersNames;
   @Getter
   @Setter
   private String name;
@@ -29,14 +31,44 @@ public class Player extends Actor {
     this.attack = 20;
     this.defence = 0;
     this.map = map;
+    this.developersNames = new ArrayList<>();
+    fillDevsNamesList();
   }
 
-  public Player(Cell cell, int health) {
+  private void revealNearbyCells() {
+    int rangeMinimum = -5;//check cells in range 3
+    int rangeMaximum = 6;
+
+    for (int dx = rangeMinimum; dx < rangeMaximum; dx++) {
+      for (int dy = rangeMinimum; dy < rangeMaximum; dy++) {
+        try {
+          Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
+          if (!nearbyToPlayer.isVisible()) {
+            nearbyToPlayer.setVisible(true);
+          }
+        } catch (Exception ignored) {
+        }
+      }
+    }
+  }
+
+  private void fillDevsNamesList() {
+    developersNames.add("Marianna");
+    developersNames.add("Valeria");
+    developersNames.add("Adam");
+    developersNames.add("Mateusz");
+    developersNames.add("Michał");
+  }
+
+  public Player(Cell cell, int health, String name) {
     super(cell);
     revealNearbyCells();
     this.health = health;
     this.attack = 20;
     this.defence = 0;
+    this.name = name;
+    this.developersNames = new ArrayList<>();
+    fillDevsNamesList();
   }
 
   public int getAttack() {
@@ -54,14 +86,25 @@ public class Player extends Actor {
   public void move(int dx, int dy) {
     Cell nextCell = cell.getNeighbor(dx, dy);
     if (nextCell != null) {
-      boolean isMovementOk = isMovementOk(nextCell);
-      if (isMovementOk) {
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
-        revealNearbyCells();
+      if (developersName()) {
+        if (nextCell.getActor() == null) {
+          changePositionOnMap(nextCell);
+        }
+      } else if (isMovementOk(nextCell)) {
+        changePositionOnMap(nextCell);
       }
     }
+  }
+
+  private boolean developersName() {
+    return developersNames.contains(this.name);
+  }
+
+  private void changePositionOnMap(Cell nextCell) {
+    cell.setActor(null);
+    nextCell.setActor(this);
+    cell = nextCell;
+    revealNearbyCells();
   }
 
   public boolean isMovementOk(Cell nextCell) {
@@ -72,23 +115,6 @@ public class Player extends Actor {
       if (nextCellIsOpenedDoors(nextCell))
         return true;
       else return hasKey(nextCell);
-    }
-  }
-
-  private void revealNearbyCells() {
-    int rangeMinimum = -5;//check cells in range 3
-    int rangeMaximum = 6;
-
-    for (int dx = rangeMinimum; dx < rangeMaximum; dx++) {
-      for (int dy = rangeMinimum; dy < rangeMaximum; dy++) {
-        try {
-          Cell nearbyToPlayer = cell.getNeighbor(dx, dy);
-          if (!nearbyToPlayer.isVisible()) {
-            nearbyToPlayer.setVisible(true);
-          }
-        } catch (Exception ignored) {
-        }
-      }
     }
   }
 
@@ -135,10 +161,15 @@ public class Player extends Actor {
   }
 
   public void pickItem() {
-    if (cell.getItem() != null) {
+    Item pickedItem = cell.getItem();
+
+    if (pickedItem.getType() == ItemType.POTION) {
+      Potion potion = (Potion) pickedItem;
+      this.health += potion.getHealthAddingValue();
+    } else {
       inventory.addItem(cell.getItem());
-      cell.removeItem();
     }
+    cell.removeItem();
   }
 
   public void attack(int dx, int dy, ArrayList<Enemy> enemies) {

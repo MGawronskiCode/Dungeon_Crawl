@@ -25,7 +25,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class Main<T> extends Application{
+public class Main<T> extends Application {
 	@Setter
 	@Getter
 	static private Player player;
@@ -41,12 +41,16 @@ public class Main<T> extends Application{
 	private Stage stage;
 	private String heroName;
 
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
+	public void newGame() throws Exception {
+		start(stage);
+	}
+
 	@Override
-	public void start(Stage primaryStage) throws Exception{
+	public void start(Stage primaryStage) throws Exception {
 		this.stage = primaryStage;
 		GridPane ui = new GridPane();
 		ui.setPrefWidth(120);
@@ -56,19 +60,19 @@ public class Main<T> extends Application{
 		ui.add(new Label("Name: "), 0, 0);
 		ui.add(new Label("Health: "), 0, 1);
 		ui.add(new Label("Attack: "), 0, 2);
-		ui.add(new Label("Defence: "), 0, 3);
+//    ui.add(new Label("Defence: "), 0, 3);
 		ui.add(new Label("Inventory: "), 0, 4);
 		ui.add(nameLabel, 1, 0);
 		ui.add(healthLabel, 1, 1);
 		ui.add(attackLabel, 1, 2);
-		ui.add(defenceLabel, 1, 3);
+//    ui.add(defenceLabel, 1, 3);
 		ui.add(inventoryLabel, 0, 5);
 
 		BorderPane borderPane = new BorderPane();
-		
+
 		borderPane.setCenter(canvas);
 		borderPane.setRight(ui);
-		
+
 		Scene scene = new Scene(borderPane);
 		primaryStage.setScene(scene);
 		refresh();
@@ -78,6 +82,27 @@ public class Main<T> extends Application{
 		primaryStage.show();
 		setHeroName();
 
+	}
+
+	private void refresh() {
+		context.setFill(Color.BLACK);
+		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+		for (int x = 0; x < map.getWidth(); x++) {
+			for (int y = 0; y < map.getHeight(); y++) {
+				Cell cell = map.getCell(x, y);
+				if (cell.getActor() != null) {
+					Tiles.drawTile(context, cell.getActor(), x, y);
+				} else if (cell.getDoor() != null) {
+					Tiles.drawTile(context, cell.getDoor(), x, y);
+				} else {
+					Tiles.drawTile(context, cell, x, y);
+				}
+			}
+		}
+		healthLabel.setText("" + player.getHealth());
+		inventoryLabel.setText(player.getInventory().toString());
+		attackLabel.setText("" + player.getAttack());
+//    defenceLabel.setText("" + player.getDefence());
 	}
 
 	private void onKeyPressed(KeyEvent keyEvent) {
@@ -127,75 +152,37 @@ public class Main<T> extends Application{
 			refresh();
 		}
 	}
-	
+
+	private void setHeroName() {
+		HeroNameInputPopup heroInputPopup = new HeroNameInputPopup("Hero name");
+		heroInputPopup.showAndWait();
+		player.setName(heroInputPopup.getHeroNameEntered());
+		nameLabel.setText(heroInputPopup.getHeroNameEntered());
+	}
+
 	//todo move to the Player class
-	private void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies){
-		if(player.isEnemy(dx, dy))
+	private void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies) {
+		if (player.isEnemy(dx, dy))
 			player.attack(dx, dy, enemies);
-		else if(player.isStairs(dx, dy)){
+		else if (player.isStairs(dx, dy)) {
 //			clearMap(enemies, null);
 			clearElements((ArrayList<T>) enemies);
 			enemies.clear();
 			loadNextMap(enemies);
-		}else
+		} else
 			player.move(dx, dy);
 	}
 
-//	private void clearMap(ArrayList<Enemy> enemies, ArrayList<Item> items){
-//		clearElements((ArrayList<T>) enemies);
-//		clearElements((ArrayList<T>) items);
-//	}
-
-	private void clearElements(ArrayList<T> elements){
-		for(int i = 0;i < elements.size();i++){
+	private void clearElements(ArrayList<T> elements) {
+		for (int i = 0; i < elements.size(); i++) {
 			elements.set(i, null);
 		}
 	}
 
-	private void loadNextMap(ArrayList<Enemy> enemies){
+	private void loadNextMap(ArrayList<Enemy> enemies) {
 		String nextMapName = String.format("/map%d.txt", mapNameIncrementer);
 		mapNameIncrementer++;
 		map = MapLoader.loadMap(nextMapName);
 		enemies = MapLoader.getEnemies();
 	}
-
-	private void refresh()  {
-		context.setFill(Color.BLACK);
-		context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		for(int x = 0;x < map.getWidth();x++){
-			for(int y = 0;y < map.getHeight();y++){
-				Cell cell = map.getCell(x, y);
-				if(cell.getActor() != null){
-					Tiles.drawTile(context, cell.getActor(), x, y);
-//                } else if (cell.getItem() != null) {
-//                    Tiles.drawTile(context, cell.getItem(), x, y);
-
-				} else if(cell.getDoor() != null) {
-					Tiles.drawTile(context,cell.getDoor(), x,y);
-				}
-				else{
-					Tiles.drawTile(context, cell, x, y);
-				}
-			}
-		}
-		healthLabel.setText("" + player.getHealth());
-		inventoryLabel.setText(player.getInventory().toString());
-		attackLabel.setText("" + player.getAttack());
-		defenceLabel.setText("" + player.getDefence());
-
-
-	}
-
-	private void setHeroName() {
-		HeroNameInputPopup heroInputPopup = new HeroNameInputPopup("Hero name");
-		heroInputPopup.showAndWait();
-//		player.setName(heroInputPopup.getHeroNameEntered());
-		nameLabel.setText(heroInputPopup.getHeroNameEntered());
-	}
-
-	public void newGame() throws Exception {
-		start(stage);
-	}
-
-
 }

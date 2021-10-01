@@ -10,25 +10,24 @@ import javafx.scene.input.KeyEvent;
 
 public class SaveGameEvent implements EventHandler<KeyEvent> {
 
-    private final KeyCombination saveGameShortcut;
-    private GameMap map;
-    private Player player;
+  private final KeyCombination saveGameShortcut;
+  private final GameMap map;
+  private final Player player;
 
-    //    argument do eventu który przeniesie dane do zapisu
-    public SaveGameEvent(GameMap map, Player player) {
-        this.map = map;
-        this.player = player;
-        this.saveGameShortcut = new KeyCodeCombination(KeyCode.S, KeyCodeCombination.CONTROL_DOWN);
+  //    argument do eventu który przeniesie dane do zapisu
+  public SaveGameEvent(GameMap map, Player player) {
+    this.map = map;
+    this.player = player;
+    this.saveGameShortcut = new KeyCodeCombination(KeyCode.S, KeyCodeCombination.CONTROL_DOWN);
+  }
+
+
+  @Override
+  public void handle(KeyEvent keyEvent) {
+    if (saveGameShortcut.match(keyEvent)) {
+      SaveGamePopup saveGamePopup = new SaveGamePopup(map, player);
+      saveGamePopup.showAndWait();
     }
 
-
-    @Override
-    public void handle(KeyEvent keyEvent) {
-        if (saveGameShortcut.match(keyEvent)) {
-            System.out.println("Shortcut works!");
-            SaveGamePopup saveGamePopup = new SaveGamePopup(map,player);
-			saveGamePopup.showAndWait();
-        }
-
-    }
+  }
 }
