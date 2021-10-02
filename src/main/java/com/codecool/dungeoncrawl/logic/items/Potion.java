@@ -1,13 +1,16 @@
 package com.codecool.dungeoncrawl.logic.items;
 
 import com.codecool.dungeoncrawl.logic.Cell;
+import lombok.Getter;
 
 public class Potion extends Item {
+  @Getter
+  private final int healthAddingValue;
+
   public Potion(Cell cell) {
     super(cell, ItemType.POTION);
+    healthAddingValue = 30;
   }
-
-  //    TODO Health (Health +30)
 
   @Override
   public String getTileName() {

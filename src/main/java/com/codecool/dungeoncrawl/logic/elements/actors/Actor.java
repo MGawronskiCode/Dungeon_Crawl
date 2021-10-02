@@ -27,10 +27,6 @@ public abstract class Actor extends Element {
     int playerHealth = player.health;
     int playerDefence = player.getDefence();
     reducePlayerHealth(player, playerHealth, playerDefence);
-    if (playerKilled(player)) {
-      System.out.println("game over");
-//			todo: game over
-    }
   }
 
   private void reducePlayerHealth(Player player, int playerHealth, int playerDefence) {

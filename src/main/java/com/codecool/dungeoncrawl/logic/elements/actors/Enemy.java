@@ -3,7 +3,7 @@ package com.codecool.dungeoncrawl.logic.elements.actors;
 import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.CellType;
 
-public abstract class Enemy extends Actor {//todo tests
+public abstract class Enemy extends Actor {
 
   public Enemy(Cell cell) {
     super(cell);
