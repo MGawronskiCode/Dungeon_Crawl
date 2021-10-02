@@ -47,6 +47,4 @@ public class GameDatabaseManager {
 
         return dataSource;
     }
-
-
 }

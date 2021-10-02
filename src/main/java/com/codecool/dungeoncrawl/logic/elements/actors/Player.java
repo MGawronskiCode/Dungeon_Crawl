@@ -54,7 +54,7 @@ public class Player extends Actor {
 
   private void fillDevsNamesList() {
     developersNames.add("Marianna");
-    developersNames.add("Valeria");
+    developersNames.add("Valeriia");
     developersNames.add("Adam");
     developersNames.add("Mateusz");
     developersNames.add("Michał");
