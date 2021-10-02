@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Player extends Actor {
 
   @Getter
-  private final Inventory inventory = new Inventory();
+  private Inventory inventory;
   private final ArrayList<String> developersNames;
   @Getter
   @Setter
@@ -31,6 +31,7 @@ public class Player extends Actor {
     this.attack = 20;
     this.defence = 0;
     this.map = map;
+    this.inventory = new Inventory();
     this.developersNames = new ArrayList<>();
     fillDevsNamesList();
   }
@@ -60,13 +61,14 @@ public class Player extends Actor {
     developersNames.add("Michał");
   }
 
-  public Player(Cell cell, int health, String name) {
+  public Player(Cell cell, int health, String name, Inventory inventory) {
     super(cell);
     revealNearbyCells();
     this.health = health;
     this.attack = 20;
     this.defence = 0;
     this.name = name;
+    this.inventory = inventory;
     this.developersNames = new ArrayList<>();
     fillDevsNamesList();
   }
