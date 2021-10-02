@@ -4,15 +4,21 @@ import com.codecool.dungeoncrawl.UI.EndGamePopup;
 import com.codecool.dungeoncrawl.UI.HeroNameInputPopup;
 import com.codecool.dungeoncrawl.UI.SaveGameEvent;
 import com.codecool.dungeoncrawl.logic.Cell;
+import com.codecool.dungeoncrawl.logic.CellType;
 import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.MapLoader;
 import com.codecool.dungeoncrawl.logic.elements.actors.Enemy;
 import com.codecool.dungeoncrawl.logic.elements.actors.Player;
+import com.codecool.dungeoncrawl.logic.items.Item;
+import com.google.gson.Gson;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -22,6 +28,8 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -68,12 +76,42 @@ public class Main<T> extends Application{
 		
 		borderPane.setCenter(canvas);
 		borderPane.setRight(ui);
-		
+
 		Scene scene = new Scene(borderPane);
 		primaryStage.setScene(scene);
 		refresh();
 		scene.setOnKeyPressed(this::onKeyPressed);
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, new SaveGameEvent(map, player));
+
+		Button button = new Button();
+		button.setText("Pick me");
+		button.setFocusTraversable(false);
+		button.setOnAction(actionEvent -> {
+
+			Item item = player.getCell().getItem();
+			if(item != null) {
+				player.getInventory().addItem(item);
+				player.getCell().setItem(null);
+				player.getCell().setType(CellType.FLOOR);
+			}
+		});
+		ui.add(button, 0, 10);
+
+		Button save = new Button();
+		save.setText("Export game");
+		save.setFocusTraversable(false);
+		save.setOnAction(actionEvent -> {
+			Gson gson = new Gson();
+			String filePath = "C:\\project\\java_19_09_21\\dungeon-crawl-1-java-GMichalCode\\src\\main\\resources\\gameState\\1.json";
+			try {
+				gson.toJson(player.getMap(), new FileWriter(filePath));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+		});
+		ui.add(save, 0, 20);
+
 		primaryStage.setTitle("Dungeon Crawl");
 		primaryStage.show();
 		setHeroName();

@@ -2,9 +2,10 @@ package com.codecool.dungeoncrawl.logic;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public enum CellType {
+public enum CellType implements Serializable {
   EMPTY("empty"), FLOOR("floor"), WALL("wall"), STAIRS("stairs"),
 
   SWORD("sword"), KEY("key"), POTION("potion"), HAUBERK("hauberk"),

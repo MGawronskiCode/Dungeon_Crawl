@@ -10,7 +10,7 @@ import java.util.Random;
 
 @Getter
 public class Demon extends Enemy {
-  private final GameMap actualMap;
+  private transient final GameMap actualMap;
   private int teleportCountdown;
 
   public Demon(Cell cell, GameMap actualMap) {

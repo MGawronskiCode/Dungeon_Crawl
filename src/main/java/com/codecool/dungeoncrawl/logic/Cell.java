@@ -6,8 +6,10 @@ import com.codecool.dungeoncrawl.logic.items.Item;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Cell implements Drawable {
-  private final GameMap gameMap;
+import java.io.Serializable;
+
+public class Cell implements Drawable, Serializable {
+  private transient final GameMap gameMap;
   @Getter
   private final int x;
   @Getter

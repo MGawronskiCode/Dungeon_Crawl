@@ -5,10 +5,12 @@ import com.codecool.dungeoncrawl.logic.Drawable;
 import lombok.Getter;
 import lombok.Setter;
 
-public abstract class Element implements Drawable {
+import java.io.Serializable;
+
+public abstract class Element implements Drawable, Serializable {
   @Getter
   @Setter
-  protected Cell cell;
+  protected transient Cell cell;
 
   public Element(Cell cell) {
     this.cell = cell;
