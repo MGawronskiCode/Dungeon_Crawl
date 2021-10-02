@@ -3,11 +3,12 @@ package com.codecool.dungeoncrawl.logic;
 import com.codecool.dungeoncrawl.logic.elements.actors.Enemy;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 @Getter
-public class GameMap {
+public class GameMap implements Serializable {
   private final int width;
   private final int height;
   private final Cell[][] cells;

@@ -4,6 +4,7 @@ import com.codecool.dungeoncrawl.logic.Cell;
 import com.codecool.dungeoncrawl.logic.elements.Element;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.Random;
 
 @Getter

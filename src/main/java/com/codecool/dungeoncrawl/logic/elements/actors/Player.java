@@ -10,6 +10,7 @@ import com.codecool.dungeoncrawl.logic.items.Potion;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player extends Actor {
@@ -22,7 +23,7 @@ public class Player extends Actor {
   private String name;
   @Getter
   @Setter
-  private GameMap map;
+  private transient GameMap map;
 
   public Player(Cell cell, GameMap map) {
     super(cell);

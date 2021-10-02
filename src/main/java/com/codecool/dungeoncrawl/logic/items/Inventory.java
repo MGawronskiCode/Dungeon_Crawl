@@ -2,10 +2,11 @@ package com.codecool.dungeoncrawl.logic.items;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 @Getter
-public class Inventory {
+public class Inventory implements Serializable {
   private final ArrayList<Item> items = new ArrayList<>();
 
   public void addItem(Item item) {
