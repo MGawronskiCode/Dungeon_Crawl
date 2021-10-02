@@ -6,15 +6,17 @@ import com.codecool.dungeoncrawl.logic.GameMap;
 import com.codecool.dungeoncrawl.logic.items.Inventory;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.codecool.dungeoncrawl.logic.items.ItemType;
+import com.codecool.dungeoncrawl.logic.items.Potion;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class Player extends Actor {//todo tests
+public class Player extends Actor {
 
   @Getter
   private final Inventory inventory = new Inventory();
+  private final ArrayList<String> developersNames;
   @Getter
   @Setter
   private String name;
@@ -29,14 +31,8 @@ public class Player extends Actor {//todo tests
     this.attack = 20;
     this.defence = 0;
     this.map = map;
-  }
-
-  public Player(Cell cell, int health) {
-    super(cell);
-    revealNearbyCells();
-    this.health = health;
-    this.attack = 20;
-    this.defence = 0;
+    this.developersNames = new ArrayList<>();
+    fillDevsNamesList();
   }
 
   private void revealNearbyCells() {
@@ -56,6 +52,25 @@ public class Player extends Actor {//todo tests
     }
   }
 
+  private void fillDevsNamesList() {
+    developersNames.add("Marianna");
+    developersNames.add("Valeria");
+    developersNames.add("Adam");
+    developersNames.add("Mateusz");
+    developersNames.add("Michał");
+  }
+
+  public Player(Cell cell, int health, String name) {
+    super(cell);
+    revealNearbyCells();
+    this.health = health;
+    this.attack = 20;
+    this.defence = 0;
+    this.name = name;
+    this.developersNames = new ArrayList<>();
+    fillDevsNamesList();
+  }
+
   public int getAttack() {
     return attack + inventory.getAttack();
   }
@@ -71,33 +86,68 @@ public class Player extends Actor {//todo tests
   public void move(int dx, int dy) {
     Cell nextCell = cell.getNeighbor(dx, dy);
     if (nextCell != null) {
-      boolean isMovementOk = isMovementOk(nextCell);
-      if (isMovementOk) {
-        cell.setActor(null);
-        nextCell.setActor(this);
-        cell = nextCell;
-        revealNearbyCells();
+      if (developersName()) {
+        if (nextCell.getActor() == null) {
+          changePositionOnMap(nextCell);
+        }
+      } else if (isMovementOk(nextCell)) {
+        changePositionOnMap(nextCell);
       }
     }
   }
 
-  public boolean isMovementOk(Cell nextCell) {//powydzielać do funkcji
-    if (nextCell.getDoor() != null) {
-      if (nextCell.getDoor().isOpen()) {
-        return nextCell.getActor() == null;
-      } else {
-        for (Item item : inventory.getItems()) {
-          if (item.getType() == ItemType.KEY) {
-            inventory.removeItem(item);
-            nextCell.getDoor().open();
-            return true;
-          }
-        }
-        return false;
+  private boolean developersName() {
+    return developersNames.contains(this.name);
+  }
+
+  private void changePositionOnMap(Cell nextCell) {
+    cell.setActor(null);
+    nextCell.setActor(this);
+    cell = nextCell;
+    revealNearbyCells();
+  }
+
+  public boolean isMovementOk(Cell nextCell) {
+    if (nextCellWallOrEnemy(nextCell)) return false;
+    else if (nextCellNotDoors(nextCell))
+      return true;
+    else {
+      if (nextCellIsOpenedDoors(nextCell))
+        return true;
+      else return hasKey(nextCell);
+    }
+  }
+
+  private boolean nextCellWallOrEnemy(Cell nextCell) {
+    String tileInCell = nextCell.getTileName();
+    return tileInCell.equals("wall") || nextCell.getActor() != null;
+  }
+
+  private boolean nextCellNotDoors(Cell nextCell) {
+    return nextCell.getDoor() == null;
+  }
+
+  private boolean nextCellIsOpenedDoors(Cell nextCell) {
+    return nextCell.getDoor().isOpen();
+  }
+
+  private boolean hasKey(Cell nextCell) {
+    for (Item item : inventory.getItems()) {
+      if (openDoorsPossible(item)) {
+        openDoors(nextCell, item);
+        return true;
       }
     }
-    String tileInCell = nextCell.getTileName();
-    return !(tileInCell.equals("wall") || nextCell.getActor() != null);
+    return false;
+  }
+
+  private boolean openDoorsPossible(Item item) {
+    return item.getType() == ItemType.KEY;
+  }
+
+  private void openDoors(Cell nextCell, Item item) {
+    inventory.removeItem(item);
+    nextCell.getDoor().open();
   }
 
   public boolean isEnemy(int dx, int dy) {
@@ -108,6 +158,18 @@ public class Player extends Actor {//todo tests
   public boolean isStairs(int dx, int dy) {
     Cell nextCell = cell.getNeighbor(dx, dy);
     return nextCell.getType() == CellType.STAIRS;
+  }
+
+  public void pickItem() {
+    Item pickedItem = cell.getItem();
+
+    if (pickedItem.getType() == ItemType.POTION) {
+      Potion potion = (Potion) pickedItem;
+      this.health += potion.getHealthAddingValue();
+    } else {
+      inventory.addItem(cell.getItem());
+    }
+    cell.removeItem();
   }
 
   public void attack(int dx, int dy, ArrayList<Enemy> enemies) {
@@ -121,7 +183,7 @@ public class Player extends Actor {//todo tests
 
   private int reduceEnemyHealthAfterAttack(Enemy attackedEnemy) {
     int enemyHealth = attackedEnemy.health;
-    int enemyDefence = attackedEnemy.defence;
+//    int enemyDefence = attackedEnemy.defence;
     attackedEnemy.health = (enemyHealth/* + enemyDefence*/ - this.attack);
     return enemyHealth;
   }
@@ -133,12 +195,5 @@ public class Player extends Actor {//todo tests
   private void removeAttackedEnemy(ArrayList<Enemy> enemies, Cell nextCell, Enemy attackedEnemy) {
     enemies.removeIf(enemy -> enemy.equals(attackedEnemy));
     nextCell.setActor(null);
-  }
-
-  public void pickItem() {
-    if (cell.getItem() != null) {
-      inventory.addItem(cell.getItem());
-      cell.removeItem();
-    }
   }
 }
