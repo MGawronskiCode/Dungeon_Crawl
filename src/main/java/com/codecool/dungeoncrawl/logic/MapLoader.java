@@ -114,7 +114,7 @@ public class MapLoader {
               if (Main.getPlayer() == null)
                 Main.setPlayer(new Player(cell, map));
               else
-                Main.setPlayer( new Player(cell, Main.getPlayer().getHealth(), Main.getPlayer().getName(), Main.getPlayer().getInventory()));
+                Main.setPlayer(new Player(cell, Main.getPlayer().getHealth(), Main.getPlayer().getName(), Main.getPlayer().getInventory()));
               break;
             case '+':
               cell.setType(CellType.STAIRS);
@@ -125,7 +125,7 @@ public class MapLoader {
         }
       }
     }
-	  map.setCurrentMap(mapName);
-	  return map;
+    map.setCurrentMap(mapName);
+    return map;
   }
 }

@@ -14,9 +14,9 @@ import java.util.ArrayList;
 
 public class Player extends Actor {
 
-  @Getter
-  private Inventory inventory;
   private final ArrayList<String> developersNames;
+  @Getter
+  private final Inventory inventory;
   @Getter
   @Setter
   private String name;
