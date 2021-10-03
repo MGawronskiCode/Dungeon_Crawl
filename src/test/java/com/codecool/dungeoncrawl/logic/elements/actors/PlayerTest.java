@@ -35,8 +35,8 @@ class PlayerTest {
     assertEquals(0, player.getDefence());
   }
 
-//  @Test
-//  public void whenCreatingNewPlayerWithSecondConstructor_allItsFieldsHaveCorrectValues() {
+  @Test
+  public void whenCreatingNewPlayerWithSecondConstructor_allItsFieldsHaveCorrectValues() {
 ////    when
 //    player = new Player(new Cell(new GameMap(10, 10, CellType.EMPTY), 0, 0, CellType.EMPTY), 100, "name");
 ////    then
@@ -45,7 +45,7 @@ class PlayerTest {
 //    assertNull(player.getMap());
 //    assertEquals(100, player.getHealth());
 //    assertEquals("name", player.getName());
-//  }
+  }
 
   @Test
   public void getAttackReturnsCorrectValuesDependsOnInventory() {

@@ -12,8 +12,6 @@ import com.codecool.dungeoncrawl.logic.elements.actors.Player;
 import com.codecool.dungeoncrawl.logic.items.Item;
 import com.google.gson.Gson;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -33,7 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-public class Main<T> extends Application {
+public class Main extends Application {
     @Setter
     @Getter
     static private Player player;
@@ -198,7 +196,7 @@ public class Main<T> extends Application {
     }
 
     //todo move to the Player class
-    private void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies) {
+    private <T> void makeMove(Player player, int dx, int dy, ArrayList<Enemy> enemies) {
         if (player.isEnemy(dx, dy))
             player.attack(dx, dy, enemies);
         else if (player.isStairs(dx, dy)) {
@@ -210,7 +208,7 @@ public class Main<T> extends Application {
             player.move(dx, dy);
     }
 
-    private void clearElements(ArrayList<T> elements) {
+    private <T> void clearElements(ArrayList<T> elements) {
         for (int i = 0; i < elements.size(); i++) {
             elements.set(i, null);
         }
